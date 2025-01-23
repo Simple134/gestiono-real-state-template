@@ -136,8 +136,7 @@ useEffect(() => {
 
                 <h1 className="text-2xl font-bold pt-4 pl-4">INMUEBLES DE SANTIAGO</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8">
-                    
-              {loading ? (
+              {loading || currentData.length === 0 ? (
                     <div className="flex flex-col gap-4">
                         {Array.from({ length: 1 }).map((_, index) => (
                             <div key={index} className="animate-pulse flex flex-col space-y-4 p-4 border ">

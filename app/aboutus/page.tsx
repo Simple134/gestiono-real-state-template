@@ -52,7 +52,8 @@ const AboutUs = () => {
                     </div>
                 </div>
             </Container>
-            <Container className="mb-10">
+
+            {/*<Container className="mb-10">
                 <Column columns={{ xl: { width: 5 }, md: { width: 1 }, sm: { width: 1 } }}>
                     <div className="flex justify-center py-4">
                         <h1 className="text-black text-2xl uppercase font-bold">Nuestros Clientes Dicen:</h1>
@@ -63,7 +64,7 @@ const AboutUs = () => {
                         ))}
                     </div>
                 </Column>
-            </Container>
+            </Container>*/}
             <Container className="mb-10">
                 <Column columns={{ xl: { width: 5 }, md: { width: 1 }, }}>
                     <div className="flex flex-col lg:items-center lg:justify-center">
@@ -71,7 +72,7 @@ const AboutUs = () => {
                             Nuestro Equipo
                         </h1>
                         <div className="flex overflow-x-auto pb-4 gap-4 no-scrollbar">
-                            {Array.from({ length: 3 }).map((_, index) => (
+                            {Array.from({ length: 1 }).map((_, index) => (
                                 <Profile key={index} />
                             ))}
                         </div>

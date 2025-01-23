@@ -10,7 +10,7 @@ const InfoInput = () => {
                 <h2 className="text-lg font-semibold mb-2 text-black">Nombre</h2>
                 <input
                     type="text"
-                    placeholder="Josue"
+                    placeholder="Nombre"
                     className="w-full px-3 py-2 border rounded-md"
                 />
             </div>

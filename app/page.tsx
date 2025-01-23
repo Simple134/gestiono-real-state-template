@@ -71,11 +71,11 @@ export default function Home() {
                     </div>
                 </div>
             </Container>
-            <Container className="h-[90lvh]">
+            <Container className="h-[70lvh]">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3B4504] text-center sm:text-left" >Proyectos Recomendados</h1>
                 <Grid columns={{ xl: 4, md: 1, sm: 1, }}>
                     
-                {loading ? (
+                {loading || data.length === 0 ? (
                     <div className="flex flex-col gap-4">
                         {Array.from({ length: 1 }).map((_, index) => (
                             <div key={index} className="animate-pulse flex flex-col space-y-4 p-4 border ">
