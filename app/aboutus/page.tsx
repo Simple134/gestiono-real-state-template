@@ -1,7 +1,6 @@
 "use client"
 
 import { Button1, ButtonMail, ButtonWhatsapp } from "@/components/button"
-import CardComment from "@/components/commentCard"
 import { MainIconBig } from "@/components/icons"
 import InfoInput from "@/components/input"
 import Profile from "@/components/profile"
