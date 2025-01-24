@@ -51,7 +51,7 @@ const AboutUs = () => {
                     <div className="lg:flex lg:items-end lg:justify-end lg:mb-20 hidden lg:block ">
                         <MainIconBig />
                     </div>
-                    <div className="flex items-end justify-end lg:mb-20 block lg:hidden bg-blue-500">
+                    <div className="flex items-end justify-end lg:mb-20 block lg:hidden">
                         <MainIcon />
                     </div>
                 </div>

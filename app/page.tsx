@@ -96,14 +96,17 @@ export default function Home() {
                     </div>
                 )}
                 <div className="flex flex-col h-[70vh] w-full justify-center items-center space-y-6">
-                    <h1 className="text-white text-center text-3xl md:text-6xl font-bold uppercase  ">
-                        Las mejores Inversiones <br /> Inmobiliarias
-                    </h1>
+                    <span className=" text-center text-2xl lg:text-6xl font-bold uppercase hidden lg:block ">
+                        Las mejores Inversiones <br/> Inmobiliarias
+                    </span>
+                    <span className=" text-center text-xl  font-bold uppercase block lg:hidden ">
+                        Las mejores Inversiones Inmobiliarias
+                    </span>
                     <div className="flex flex-col justify-center w-full max-w-2xl items-center px-4">
-                        <p className="text-[#9C9C78] text-center text-xl md:text-2xl">
+                        <p className="text-[#9C9C78] text-center text-sm">
                             Busca tu próximo proyecto para invertir con nosotros
                         </p>
-                        <div className="flex justify-center items-center w-full mt-6 pl-10">
+                        <div className="flex justify-center items-center w-full mt-6 lg:pl-10">
                             <input
                                 type="text"
                                 placeholder="Pais, Ciudad, Proyecto, ID, Zonas"
@@ -116,7 +119,7 @@ export default function Home() {
                     </div>
                 </div>
             </Container>
-            <Container className="h-[70lvh]">
+            <Container className="h-[85lvh] mt-10">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3B4504] text-center sm:text-left" >Proyectos Recomendados</h1>
                 <Grid columns={{ xl: 4, md: 1, sm: 1, }}>
 

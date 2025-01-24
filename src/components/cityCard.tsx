@@ -13,7 +13,7 @@ const CityCard = () => {
             {cityBackgrounds.map((background, index) => (
                 <div 
                     key={index} 
-                    className="md:w-80 h-12 justify-center items-center flex" 
+                    className="w-full md:w-64 h-14 justify-center items-center flex" 
                     style={{
                         backgroundImage: `url(${background})`,
                         backgroundSize: 'cover',
