@@ -2,7 +2,7 @@ import React from 'react';
 
 const cityBackgrounds = [
     "/lavegaimage.png",
-    "/mocaImage.png",
+    "/mocaimage.png",
     "/santiagoimage.png",
     "/puntaCanaimage.png",
 ]
