@@ -171,10 +171,6 @@ export default function Home() {
                             {infoInput ? (
                                 <div className="w-full py-8">
                                     <InfoInput />
-                                    <div className="flex space-x-4">
-                                        <ButtonMail text='Contactanos' />
-                                        <ButtonWhatsapp text="Contáctanos" />
-                                    </div>
                                 </div>
                             ) : (
                                 <div className="flex flex-col space-y-4 text-center !md:text-left sm:text-left">
