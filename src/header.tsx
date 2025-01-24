@@ -12,9 +12,13 @@ const Header = () => {
     const pathname = usePathname()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+    if (pathname === "/") {
+        return null
+    }
+
     return (
         <Container className="bg-black !p-0 w-full !m-0">
-            <div className="flex justify-between items-center text-white h-full w-full !p-0 !m-0 px-4 md:px-12">
+            <div className="flex justify-between text-white h-full w-full !p-0 !m-0 ">
                 <div className="cursor-pointer" onClick={() => router.push("/")}>
                     <MainIcon />
                 </div>

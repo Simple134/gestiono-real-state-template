@@ -1,7 +1,7 @@
 "use client"
 
 import { Button1, ButtonMail, ButtonWhatsapp } from "@/components/button"
-import { MainIconBig } from "@/components/icons"
+import { MainIcon, MainIconBig } from "@/components/icons"
 import InfoInput from "@/components/input"
 import Profile from "@/components/profile"
 import { Column, Container, Grid } from "@bitnation-dev/components"
@@ -36,18 +36,23 @@ const AboutUs = () => {
                 </div>
             </Container>
             <Container className="bg-cover container-inside" style={{ backgroundImage: "url('/imageCover.png')" }}>
-                <div className="h-[90dvh] flex flex-col  justify-between" >
-                    <div className="flex flex-col  p-2 ">
-                        <h1 className="text-[#9C9C78] text-2xl font-bold uppercase pb-4 ">¿Quienes Somos?</h1>
-                        <p className="text-md font-bold">
-                            Emira Group es una empresa inmobiliaria dedicada a ofrecer soluciones excepcionales en la compra, venta y alquiler de propiedades.
-                        </p>
+                <div className="h-[90dvh] lg:h-[55dvh] flex flex-col  justify-between" >
+                    <div className="flex flex-col p-2 lg:justify-center lg:h-full lg:mt-20 ">
+                        <h1 className="text-[#9C9C78] text-4xl font-bold uppercase pb-4 lg:text-4xl">¿Quienes Somos?</h1>
+                        <div className="lg:w-[30vw]">
+                            <p className="text-md font-bold lg:text-xl">
+                                Emira Group es una empresa inmobiliaria dedicada a ofrecer soluciones excepcionales en la compra, venta y alquiler de propiedades.
+                            </p>
+                        </div>
                         <div className="mt-4">
                             <Button1 text="Hablemos" icon />
                         </div>
                     </div>
-                    <div className="flex items-end justify-end">
+                    <div className="lg:flex lg:items-end lg:justify-end lg:mb-20 hidden lg:block ">
                         <MainIconBig />
+                    </div>
+                    <div className="flex items-end justify-end lg:mb-20 block lg:hidden bg-blue-500">
+                        <MainIcon />
                     </div>
                 </div>
             </Container>
