@@ -80,7 +80,7 @@ export default function Home() {
                     absolute md:relative top-16 md:top-0 
                     right-0 md:right-auto 
                     w-28 md:w-auto 
-                    bg-black md:bg-transparent
+                    md:bg-transparent
                     ${isMenuOpen ? 'flex' : 'hidden'}
                     flex-col md:flex-row
                     md:items-center
@@ -97,7 +97,7 @@ export default function Home() {
                 )}
                 <div className="flex flex-col h-[70vh] w-full justify-center items-center space-y-6">
                     <span className=" text-center text-2xl lg:text-6xl font-bold uppercase hidden lg:block ">
-                        Las mejores Inversiones <br/> Inmobiliarias
+                        Las mejores Inversiones <br /> Inmobiliarias
                     </span>
                     <span className=" text-center text-xl  font-bold uppercase block lg:hidden ">
                         Las mejores Inversiones Inmobiliarias
@@ -182,7 +182,7 @@ export default function Home() {
                                         inversiones inmobiliarias
                                     </p>
                                     <div className="flex space-x-4 py-4">
-                                        <ButtonMail text="Contáctanos" onClick={handleInfoInput} />
+                                        <ButtonMail text="Contáctanos" onClick={handleInfoInput} visible={true} />
                                         <ButtonWhatsapp text="Contáctanos" />
                                     </div>
                                 </div>

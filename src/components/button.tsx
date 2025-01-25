@@ -5,6 +5,7 @@ interface ButtonProps {
     icon?: boolean;
     onClick?: () => void;
     type?: "button" | "submit" | "reset" | undefined;
+    visible?: boolean;
 }
 
 export const Button1 = ({ text, icon, onClick }: ButtonProps) => {
@@ -19,9 +20,9 @@ export const Button1 = ({ text, icon, onClick }: ButtonProps) => {
 }
 
 
-export const ButtonMail = ({ text, onClick, type }: ButtonProps) => {
+export const ButtonMail = ({ text, onClick, type, visible }: ButtonProps) => {
     return (
-        <button className="bg-[#9C9C78] text-white px-4 py-2 flex items-center cursor-pointer space-x-4 h-12 justify-center"  onClick={onClick} type={type}>
+        <button className={`bg-[#9C9C78] text-white px-4 py-2 flex items-center cursor-pointer space-x-4 h-12 justify-center ${visible ? 'visible' : 'hidden'}`}  onClick={onClick} type={type}>
             <MailIcon /> 
             <p>{text}</p>
         </button>

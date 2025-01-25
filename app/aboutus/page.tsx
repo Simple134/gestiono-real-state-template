@@ -2,11 +2,10 @@
 
 import { Button1, ButtonMail, ButtonWhatsapp } from "@/components/button"
 import { MainIcon, MainIconBig } from "@/components/icons"
-import InfoInput from "@/components/input"
 import Profile from "@/components/profile"
 import { Column, Container, Grid } from "@bitnation-dev/components"
 import Image from "next/image"
-import React from "react"
+import { useState } from "react"
 import { usePathname } from "next/navigation"
 
 
@@ -20,6 +19,25 @@ const AboutUs = () => {
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
         window.open(mapsUrl, '_blank')
     }
+        const [formData, setFormData] = useState({
+        nombre: '',
+        email: '',
+        mensaje: ''
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const mailtoLink = `mailto:emiragroupinfo@gmail.com?subject=Nuevo mensaje de contacto&body=Nombre: ${formData.nombre}%0D%0AEmail: ${formData.email}%0D%0AMensaje: ${formData.mensaje}`;
+        window.location.href = mailtoLink;
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     return (
         <>
@@ -141,11 +159,45 @@ const AboutUs = () => {
                             </div>
                             <div className="flex justify-center items-center order-2 md:order-none">
                                 <div className="w-full px-4 md:px-0">
-                                    <InfoInput />
-                                    <div className="flex space-x-2 ">
-                                        <ButtonMail text='Contactanos' />
+                                    <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-full px-4 md:px-0">
+                                        <div className="w-full">
+                                            <h2 className="text-lg font-semibold mb-2 text-black">Nombre</h2>
+                                            <input
+                                                type="text"
+                                                name="nombre"
+                                                value={formData.nombre}
+                                                onChange={handleChange}
+                                                placeholder="Nombre"
+                                                className="w-full px-3 py-2 border rounded-md text-black"
+                                            />
+                                        </div>
+                                        <div className="w-full">
+                                            <h2 className="text-lg font-semibold mb-2 text-black">Email</h2>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                placeholder="tu@email.com"
+                                                className="w-full px-3 py-2 border rounded-md text-black"
+                                            />
+                                        </div>
+                                        <div className="w-full">
+                                            <h2 className="text-lg font-semibold text-black">Mensaje</h2>
+                                            <textarea
+                                                name="mensaje"
+                                                value={formData.mensaje}
+                                                onChange={handleChange}
+                                                placeholder="Estoy interesado en este proyecto..."
+                                                className="w-full px-3 py-2 border rounded-md text-black"
+                                                rows={4}
+                                            ></textarea>
+                                        </div>
+                                        <div className="flex space-x-2 ">
+                                        <ButtonMail text="Enviar Mensaje" type="submit" visible={true}/>
                                         <ButtonWhatsapp text="Contáctanos" />
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </Grid>
