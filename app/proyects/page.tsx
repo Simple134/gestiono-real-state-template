@@ -17,13 +17,18 @@ export default function Proyects() {
   const pageName = <span style={{ color: '#9C9C78' }}>Inmuebles</span>
   const [data, setData] = useState<Propiedades[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const searchParams = new URLSearchParams(window.location.search);
-  const searchQuery = searchParams.get('search') || '';
-  const [searchLocation, setSearchLocation] = useState(searchQuery);
+  const [searchLocation, setSearchLocation] = useState('');
   const [, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+  const searchQuery = searchLocation;
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchQuery = searchParams.get('search') || '';
+    setSearchLocation(searchQuery);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
