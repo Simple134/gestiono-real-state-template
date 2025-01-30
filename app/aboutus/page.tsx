@@ -41,24 +41,26 @@ const AboutUs = () => {
 
     return (
         <>
-            <Container >
+            <Container className="!p-0 !m-0 h-28">
                 <div className="hidden lg:block">
                     <p className="text-black font-['poppins'] font-light">
-                        Home &gt; {pathname === "/aboutus" ? pageName : pathname}
+                       <span className="text-black font-bold">Home</span> &gt; {pathname === "/aboutus" ? pageName : pathname}
                     </p>
                 </div>
                 <div>
-                    <h1 className="text-3xl text-black font-bold font-['Poppins'] py-4">
+                    <h1 className="text-4xl text-black font-bold font-['Poppins'] py-2">
                         NOSOTROS
                     </h1>
                 </div>
             </Container>
-            <Container className="bg-cover container-inside" style={{ backgroundImage: "url('/imageCover.png')" }}>
+            <Container className="bg-cover container-inside relative" style={{ 
+                backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/imageCover.png')"  
+            }}>
                 <div className="h-[90dvh] lg:h-[55dvh] flex flex-col  justify-between" >
                     <div className="flex flex-col p-2 lg:justify-center lg:h-full lg:mt-20 ">
                         <h1 className="text-[#9C9C78] text-4xl font-bold uppercase pb-4 lg:text-4xl">¿Quienes Somos?</h1>
                         <div className="lg:w-[30vw]">
-                            <p className="text-md font-bold lg:text-xl">
+                            <p className="text-md  lg:text-xl">
                                 Emira Group es una empresa inmobiliaria dedicada a ofrecer soluciones excepcionales en la compra, venta y alquiler de propiedades.
                             </p>
                         </div>
@@ -93,7 +95,7 @@ const AboutUs = () => {
                         <h1 className="text-4xl text-black font-bold pb-4">
                             Nuestro Equipo
                         </h1>
-                        <div className="flex overflow-x-auto pb-4 gap-4 no-scrollbar">
+                        <div className="flex overflow-x-auto pb-4 gap-4 no-scrollbar ">
                             {Array.from({ length: 1 }).map((_, index) => (
                                 <Profile key={index} />
                             ))}
@@ -133,6 +135,7 @@ const AboutUs = () => {
                             text="¿Cómo llegar?"
                             icon
                             onClick={handleMapClick}
+                            color="primary"
                         />
                     </div>
                 </Column>
@@ -140,7 +143,7 @@ const AboutUs = () => {
             <Column columns={{ xl: { width: 5 }, md: { width: 1 }, sm: { width: 1 } }}>
                 <Container className="bg-[#F5F5F5] [&>.container-inside]:!p-0 mt-10 mb-16">
                     <div>
-                        <Grid columns={{ xl: 2, md: 1, sm: 1 }}>
+                        <Grid columns={{ xl: 2, md: 1, sm: 1 }} className="space-x-12">
                             <div className="flex flex-col order-1 md:order-none">
                                 <div className="flex justify-center items-center -mt-10">
                                     <Image
@@ -157,7 +160,7 @@ const AboutUs = () => {
                                 </h2>
                                 <p className="text-md text-[#757575] pl-4 md:hidden ">Elimina dudas o busca donde invertir con la asistencia de un experto en inversiones inmobiliarias</p>
                             </div>
-                            <div className="flex justify-center items-center order-2 md:order-none">
+                            <div className="flex justify-center items-center order-2 md:order-none w-3/4">
                                 <div className="w-full px-4 md:px-0">
                                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-full px-4 md:px-0">
                                         <div className="w-full">
@@ -193,9 +196,9 @@ const AboutUs = () => {
                                                 rows={4}
                                             ></textarea>
                                         </div>
-                                        <div className="flex space-x-2 ">
-                                        <ButtonMail text="Enviar Mensaje" type="submit" visible={true}/>
-                                        <ButtonWhatsapp text="Contáctanos" />
+                                        <div className="flex space-x-2 w-full grid grid-cols-2">
+                                        <ButtonMail text="Contáctanos" type="submit" visible={true} width="100%"/>
+                                        <ButtonWhatsapp text="Contáctanos" width="100%" />
                                     </div>
                                     </form>
                                 </div>

@@ -6,12 +6,14 @@ interface ButtonProps {
     onClick?: () => void;
     type?: "button" | "submit" | "reset" | undefined;
     visible?: boolean;
+    color?: "primary" | "secondary" 
+    width?: string;
 }
 
-export const Button1 = ({ text, icon, onClick }: ButtonProps) => {
+export const Button1 = ({ text, icon, onClick, color, width }: ButtonProps) => {
     return (
         <div className="flex py-4">
-        <div className="bg-[#3B4504] font-bold text-white px-4 py-2 flex items-center cursor-pointer " onClick={onClick}>
+        <div className={`bg-[#3B4504] font-bold text-white px-4 py-2 flex items-center cursor-pointer ${color === "primary" ? "bg-[#3B4504]" : "bg-[#9C9C78]"}`} onClick={onClick} style={{ width: width }}>
             <p className="mr-2 whitespace-nowrap">{text}</p>
             {icon && <ArrowRightMiniIcon />}
         </div>
@@ -29,7 +31,7 @@ export const ButtonMail = ({ text, onClick, type, visible }: ButtonProps) => {
     )
 }
 
-export const ButtonWhatsapp = ({ text, onClick }: ButtonProps) => {
+export const ButtonWhatsapp = ({ text, onClick, width }: ButtonProps) => {
     const phoneNumber = "8495198432";
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
 
@@ -44,6 +46,7 @@ export const ButtonWhatsapp = ({ text, onClick }: ButtonProps) => {
             rel="noopener noreferrer"
             className="bg-[#60D669] text-white px-4 py-2 flex items-center cursor-pointer space-x-4 h-12 justify-center" 
             onClick={handleWhatsAppClick}
+            style={{ width: width }}
         > 
             <WhatsappIcon />
             <p>{text}</p>

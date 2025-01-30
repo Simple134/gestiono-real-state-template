@@ -21,6 +21,7 @@ export default function Home() {
     const router = useRouter();
     const pathname = usePathname()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,11 +51,18 @@ export default function Home() {
         router.push(`/description?id=${id}`)
     }
 
-
+    const handleSearch = () => {
+        if (searchTerm.trim()) {
+            router.push(`/proyects?search=${encodeURIComponent(searchTerm.trim())}`);
+        }
+    };
 
     return (
         <>
-            <Container style={{ backgroundImage: "url('/imageCover.png')" }} className="bg-cover h-[90lvh] ">
+            <Container style={{ 
+                    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0) 20%), url('/imageCover.png')`
+                }} 
+                className="bg-cover h-[90lvh]">
                 {pathname === "/" && (
                     <div className="flex justify-between text-white h-full w-full !p-0 !m-0 ">
                         <div className="cursor-pointer" onClick={() => router.push("/")}>
@@ -108,10 +116,16 @@ export default function Home() {
                         <div className="flex justify-center items-center w-full mt-6 lg:pl-10">
                             <input
                                 type="text"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Pais, Ciudad, Proyecto, ID, Zonas"
                                 className="w-full h-16 px-4 py-2 border-2 border-[#9C9C78] bg-white text-[#9C9C78]"
+                                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                             />
-                            <div className="w-12 h-12 justify-center flex items-center border-2 border-[#9C9C78] relative right-14 bg-[#9C9C78] cursor-pointer hidden lg:flex">
+                            <div 
+                                onClick={handleSearch}
+                                className="w-12 h-12 justify-center flex items-center border-2 border-[#9C9C78] relative right-14 bg-[#9C9C78] cursor-pointer hidden lg:flex"
+                            >
                                 <SearchIcon />
                             </div>
                         </div>
@@ -191,7 +205,7 @@ export default function Home() {
                 </div>
             </Container>
             <Container>
-                <div className="flex flex-col lg:justify-center lg:items-center space-y-4 py-12 md:py-24 px-4">
+                <div className="flex flex-col lg:justify-center lg:items-center space-y-4 py-12 md:py-24 px-4" >
                     <h1 className="text-3xl md:text-4xl font-bold text-[#3B4504] font-[Neco]  md:text-left sm:text-left">
                         Búsqueda por Ciudad
                     </h1>
@@ -199,7 +213,7 @@ export default function Home() {
                         Busca proyectos en las ciudades con mayor crecimiento del país
                     </p>
                     <CityCard />
-                    <Button1 text="Busca por Ciudad" icon />
+                    <Button1 text="Busca por Ciudad" icon onClick={() => router.push('/proyects')} color="primary"/>
                 </div>
             </Container>
         </>

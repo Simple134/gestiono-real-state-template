@@ -17,7 +17,9 @@ export default function Proyects() {
   const pageName = <span style={{ color: '#9C9C78' }}>Inmuebles</span>
   const [data, setData] = useState<Propiedades[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchLocation, setSearchLocation] = useState('');
+  const searchParams = new URLSearchParams(window.location.search);
+  const searchQuery = searchParams.get('search') || '';
+  const [searchLocation, setSearchLocation] = useState(searchQuery);
   const [, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -134,9 +136,13 @@ useEffect(() => {
                     </div>
                 </div>
 
-                <h1 className="text-2xl font-bold pt-4 pl-4">INMUEBLES DE SANTIAGO</h1>
+                <h1 className="text-2xl font-bold pt-4 pl-4">
+                  {searchQuery 
+                    ? `RESULTADOS PARA "${searchQuery.toUpperCase()}"`
+                    : "INMUEBLES "}
+                </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8">
-              {loading || currentData.length === 0 ? (
+              {loading ? (
                     <div className="flex flex-col gap-4">
                         {Array.from({ length: 1 }).map((_, index) => (
                             <div key={index} className="animate-pulse flex flex-col space-y-4 p-4 border ">
@@ -145,6 +151,15 @@ useEffect(() => {
                                 <div className="bg-gray-300 h-6 w-[95%]  "></div>
                             </div>
                         ))}
+                    </div>
+                ) : currentData.length === 0 ? (
+                    <div className="col-span-full flex justify-center items-center py-10">
+                        <p className="text-xl text-gray-600 font-semibold">
+                            {searchQuery === '' 
+                              ? "No hay datos disponibles"
+                              : `No se encontraron resultados para "${searchQuery.toUpperCase()}"`
+                            }
+                        </p>
                     </div>
                 ) : (
                      currentData.map((propiedad) => (
