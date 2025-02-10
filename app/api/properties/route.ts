@@ -9,17 +9,14 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       throw new Error('GESTIONO_API_URL is not defined');
     }
     const properties = await Gestiono.getResources() 
-    console.log(properties, "properties");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const data = properties.map((property: any) => ({
+    const data = properties.map((property) => ({
       id: property?.id,
       title: property?.name,
       description: property?.description,
       price: property?.sellPrice,
       location: null,
-      image: property?.multimedia.map((media: {url: string}) => media.url),
+      image: property?.multimedia?.map((media: {url: string}) => media.url) || [],
     }));
-    console.log(data, "data");
     return NextResponse.json(data); 
   } catch (error) {
     console.error('Error al obtener las casas:', error);

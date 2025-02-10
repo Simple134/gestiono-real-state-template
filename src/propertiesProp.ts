@@ -13,7 +13,7 @@ interface Propiedades {
     name: string;
     sellPrice: number;
     location: string;
-    image: string;
+    image: string[];
 }
 
 export default Propiedades;
