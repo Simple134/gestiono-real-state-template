@@ -21,15 +21,15 @@ export default async function PropertyPage({
       description: properties?.description || "",
       image: properties?.multimedia?.map((media: {url: string}) => media.url) || [],
       clientdata:{
-        //@ts-ignore
+        //@ts-expect-error-ignore
         address: properties?.clientdata?.location || 'Punta Cana',
-        //@ts-ignore
+        //@ts-expect-error-ignore
         bathrooms: properties?.clientdata?.bathrooms,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         bedrooms: properties?.clientdata?.bedrooms,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         parking: properties?.clientdata?.parking,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         propertyType: properties?.clientdata?.propertyType,
       }
 

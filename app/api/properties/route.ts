@@ -20,15 +20,15 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       defaultCost: property?.defaultCost || 0,
       image: property?.multimedia?.map((media: { url: string }) => media.url) || [],
       clientdata: {
-        //@ts-ignore
+        //@ts-expect-error-ignore
         propertyType: property.clientdata?.propertyType,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         bathrooms: property.clientdata?.bathrooms,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         bedrooms: property.clientdata?.bedrooms,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         parking: property.clientdata?.parking,
-        //@ts-ignore
+        //@ts-expect-error-ignore
         address: property.clientdata?.address,
       },
     }));

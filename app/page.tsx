@@ -41,7 +41,7 @@ export default function Home() {
         };
 
         fetchData();
-    }, []);
+    }, [setMoreProperties]);
 
 
     const handleInfoInput = () => {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import InfoInput from "./input";
-import { ButtonMail, ButtonWhatsapp } from "./button";
+import {  ButtonWhatsapp } from "./button";
 
 const Contactanos = () => {
     return (
