@@ -188,15 +188,15 @@ export const Description = ({
                     </div>
                 )}
                 <div className="px-4 md:px-0">
-                    <div className="pb-6" id="description">
+                    <article  className="pb-6 w-[69%] text-pretty" id="description">
                         <h1 className="text-black font-bold text-3xl md:text-4xl" >Descripción</h1>
-                        <p className="text-black">{data.description ? data.description : "No hay descripción disponible"}</p>
-                    </div>
+                        <p className="text-black ">{data.description ? data.description : "No hay descripción disponible"}</p>
+                    </article >
                     <div id="ubicacion">
                         <h1 className="text-black font-bold text-3xl md:text-4xl">Ubicacion</h1>
                         <div className="mapContainer w-full">
                                 <iframe
-                                    width="100%"
+                                    width="70%"
                                     height="500"
                                     style={{ border: 0 }}
                                     referrerPolicy="no-referrer-when-downgrade"

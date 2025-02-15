@@ -57,3 +57,26 @@ export const ButtonWhatsapp = ({ text, onClick, width }: ButtonProps) => {
     )
 }
 
+
+export const ButtonInformation = ({ text, onClick, width, icon }: ButtonProps) => {
+    const phoneNumber = "8495198432";
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+
+    const handleWhatsAppClick = () => {
+        if (onClick) onClick();
+    };
+
+    return (
+        <a 
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#9C9C78] text-white px-4 py-2 flex items-center cursor-pointer space-x-4 h-12 justify-center" 
+            onClick={handleWhatsAppClick}
+            style={{ width: width }}
+        > 
+            <p>{text}</p>
+            {icon && <ArrowRightMiniIcon />}
+        </a>       
+    )
+}
