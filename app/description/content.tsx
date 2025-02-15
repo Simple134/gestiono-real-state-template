@@ -2,20 +2,26 @@
 import CalcPrestamo from "@/components/calcPrestamo";
 import { formatted } from "@/components/formatted";
 import { ArrowButtonLeft, ArrowButtonRight, BathIcon, BedIcon, ParkingIcon, ProfileIcon } from "@/components/icons";
-import { Container } from "@bitnation-dev/components";
+import { Container, Grid } from "@bitnation-dev/components";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Propiedades from "@/propertiesProp";
 import Contactanos from "@/components/contactanos";
+import Card from "@/components/cards";
+import { PropertyType } from "@/propertyType";
+import { useStore } from "@/components/store";
+
 
 export const Description = ({
-    data
+    data,
 }: {
-    data: Propiedades
+    data: PropertyType,
 }) => {
+
+
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const totalImages = data?.image.length || 0;
+    const { moreProperties } = useStore()
 
     const handlePrevImage = () => {
         setCurrentImageIndex((prevIndex) =>
@@ -41,37 +47,76 @@ export const Description = ({
         };
     }, [isModalOpen]);
 
+    console.log(data, "data")
+
     return (
         <>
             <Container>
                 <div className="h-10 w-full">
                     <h1 className="text-[#0E87A2] text-2xl">
-                        {data.title}
+                        {data.name}
                     </h1>
                 </div>
                 <div className="flex flex-wrap gap-4 items-center px-4 md:px-0">
-                    <h1 className="text-xl md:text-2xl text-[#3B4504] font-bold">{"US$" + formatted(data.price)}</h1>
+                    <h1 className="text-xl md:text-2xl text-[#3B4504] font-bold">{"US$" + formatted(data.defaultCost)}</h1>
                     <div className="flex items-center space-x-2">
                         <BathIcon />
-                        <p className="text-sm text-gray-500">{data.bathrooms ? data.bathrooms : "0 Baths"} </p>
+                        <p className="text-sm text-gray-500">{data?.clientdata?.bathrooms ? data?.clientdata?.bathrooms : "0 Baths"} </p>
                     </div>
                     <div className="flex items-center space-x-2">
                         <BedIcon />
-                        <p className="text-sm text-gray-500 ">{data.bedrooms ? data.bedrooms : "0 Beds"}</p>
+                        <p className="text-sm text-gray-500 ">{data?.clientdata?.bedrooms ? data?.clientdata?.bedrooms : "0 Beds"}</p>
                     </div>
                     <div className="flex items-center space-x-2">
                         <ParkingIcon />
-                        <p className="text-sm text-gray-500">{data.parking ? data.parking : "0 Parking"}</p>
-                    </div>
-                    <div className=" flex space-x-4 py-4" >
-                        <p className="text-sm text-black pt-2"> {data.meters ? data.meters : "0 "} m2 </p>
+                        <p className="text-sm text-gray-500">{data?.clientdata?.parking ? data?.clientdata?.parking : "0 Parking"}</p>
                     </div>
                 </div>
                 <div className="flex border-t border-b border-gray-300 items-center mb-8 py-2 overflow-x-auto no-scrollbar">
-                    <button className="text-sm md:text-base text-black p-2 md:p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap">Descripcion</button>
-                    <button className="text-black p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"> Ubicacion </button>
-                    <button className="text-black p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"> Calculo de Prestamo </button>
-                    <button className="text-black p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"> Proyectos Similares </button>
+                    <button 
+                        className="text-sm md:text-base text-black p-2 md:p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"
+                        onClick={() => {
+                            const descriptionElement = document.getElementById('description');
+                            if (descriptionElement) {
+                                descriptionElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }}
+                    >
+                        Descripcion
+                    </button>
+                    <button 
+                        className="text-black p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"
+                        onClick={() => {
+                            const ubicacionElement = document.getElementById('ubicacion');
+                            if (ubicacionElement) {
+                                ubicacionElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }}
+                    >
+                        Ubicacion
+                    </button>
+                    <button 
+                        className="text-black p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"
+                        onClick={() => {
+                            const calculoPrestamoElement = document.getElementById('calculo-prestamo');
+                            if (calculoPrestamoElement) {
+                                calculoPrestamoElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }}  
+                    >
+                        Calculo de Prestamo
+                    </button>
+                    <button 
+                        className="text-black p-4 hover:text-white hover:bg-black font-bold whitespace-nowrap"
+                        onClick={() => {
+                            const proyectosSimilaresElement = document.getElementById('proyectos-similares');
+                            if (proyectosSimilaresElement) {
+                                proyectosSimilaresElement.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }}
+                    >
+                        Proyectos Similares
+                    </button>
                 </div>
             </Container>
             <Container>
@@ -143,11 +188,11 @@ export const Description = ({
                     </div>
                 )}
                 <div className="px-4 md:px-0">
-                    <div className="pb-6">
-                        <h1 className="text-black font-bold text-3xl md:text-4xl">Descripción</h1>
+                    <div className="pb-6" id="description">
+                        <h1 className="text-black font-bold text-3xl md:text-4xl" >Descripción</h1>
                         <p className="text-black">{data.description ? data.description : "No hay descripción disponible"}</p>
                     </div>
-                    <div>
+                    <div id="ubicacion">
                         <h1 className="text-black font-bold text-3xl md:text-4xl">Ubicacion</h1>
                         <div className="mapContainer w-full">
                                 <iframe
@@ -157,32 +202,38 @@ export const Description = ({
                                     referrerPolicy="no-referrer-when-downgrade"
                                     src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams({
                                         key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || '',
-                                        q: data.location ? data.location : "",
+                                        q: data?.clientdata?.address ? data?.clientdata?.address : "Punta Cana",
                                     })}`}
                                 >
                                 </iframe>
                         </div>
                     </div>
-                    <CalcPrestamo />
-                    <div>
-                        <h1 className="text-black text-2xl md:text-3xl font-bold">Proyectos similares</h1>
+                    <div id="calculo-prestamo">
+                        <CalcPrestamo />
+                    </div>
+                    <div id="proyectos-similares" className={`${moreProperties && moreProperties.length > 1 ? 'block' : 'hidden'}`}>
+                        <h1 className="text-black text-2xl md:text-3xl font-bold ">Proyectos similares</h1>
                         <div className="overflow-x-auto">
-                            <div className="inline-flex space-x-4 py-4">
-                                {/* {Array.from(data).map((propiedad, index) => (
-                                    <div key={index} className="min-w-[280px] md:min-w-[320px]">
-                                        <Card 
-                                            multimedia={propiedad.image[0]}
-                                            price={propiedad.price}
-                                            location={propiedad.location}
-                                            bedrooms={propiedad.bedrooms}
-                                            bathrooms={propiedad.bathrooms}
-                                            parking={propiedad.parking}
-                                            meters={propiedad.meters}
-                                            operation={propiedad.operation}
-                                        />
-                                    </div>
-                                ))} */}
-                            </div>
+                        <Grid columns={{ xl: 4, md: 1, sm: 1, }}>
+                                {moreProperties && moreProperties.length > 0 ? (
+                                    moreProperties
+                                        .filter(propiedad => propiedad.id !== data.id)
+                                        .map((propiedad, id) => (
+                                            <div key={id} className="min-w-[280px] md:min-w-[320px]">
+                                                <Card 
+                                                    multimedia={propiedad?.image?.[0]} 
+                                                    price={propiedad.defaultCost}
+                                                    location={propiedad.clientdata?.address}
+                                                    bedrooms={propiedad.clientdata?.bedrooms}
+                                                    bathrooms={propiedad.clientdata?.bathrooms}
+                                                    parking={propiedad.clientdata?.parking}
+                                                />
+                                            </div>
+                                        ))
+                                ) : (
+                                    <p className="text-black text-2xl md:text-3xl font-bold">No hay proyectos similares disponibles</p>
+                                )}
+                            </Grid>
                         </div>
                     </div>
                 </div>

@@ -6,8 +6,8 @@ import Filter from "@/components/sidebar";
 import { usePathname } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Propiedades from "@/propertiesProp";
 import { motion, AnimatePresence } from 'framer-motion';
+import { PropertyType } from "@/propertyType";
 
 
 const ITEMS_PER_PAGE = 12;
@@ -15,7 +15,7 @@ const ITEMS_PER_PAGE = 12;
 export default function Proyects() {
   const pathname = usePathname()
   const pageName = <span style={{ color: '#9C9C78' }}>Inmuebles</span>
-  const [data, setData] = useState<Propiedades[]>([]);
+  const [data, setData] = useState<PropertyType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchLocation, setSearchLocation] = useState('');
   const [, setError] = useState<string | null>(null);
@@ -51,7 +51,8 @@ export default function Proyects() {
 
 
     const filteredData = data.filter((propiedad) =>
-      propiedad.title.toLowerCase().includes(searchLocation.toLowerCase())
+      propiedad.name.toLowerCase().includes(searchLocation.toLowerCase()) || 
+      propiedad.clientdata?.address?.toLowerCase().includes(searchLocation.toLowerCase())
     );
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -118,7 +119,7 @@ useEffect(() => {
                       <span className="ml-2">Filtrar</span>
                     </button>
 
-                    <div className="lg:hidden w-full h-10 text-black text-left px-2 border-2 border-gray-500 flex items-center hover:cursor-pointer justify-between">
+                    <div className="lg:hidden w-full h-10 text-black text-left px-2 border-2 border-gray-500 flex items-center hover:cursor-not-allowed justify-between">
                       <p>Ordenar Por:  </p>
                       <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -135,7 +136,7 @@ useEffect(() => {
                     placeholder="Buscar por ciudad" 
                     className="w-full h-10 pl-8 py-2 border-2 border-gray-500 bg-white text-black"/>
                   </div>
-                  <div className="hidden lg:flex flex-row items-center justify-between w-full h-10 border-2 border-gray-500 px-2">
+                  <div className="hidden lg:flex flex-row items-center justify-between w-full h-10 border-2 border-gray-500 px-2 cursor-not-allowed">
                       <p>Ordenar Por:  </p>
                       <ArrowDownIcon />
                     </div>
@@ -167,17 +168,15 @@ useEffect(() => {
                         </p>
                     </div>
                 ) : (
-                     currentData.map((propiedad) => (
+                     currentData.map((propiedad: PropertyType) => (
                         <Card
                             key={propiedad?.id}
                             multimedia={propiedad?.image[0]}
-                            price={propiedad?.price}
-                            location={propiedad?.location}
-                            bedrooms={propiedad?.bedrooms}
-                            bathrooms={propiedad?.bathrooms}
-                            parking={propiedad?.parking}
-                            meters={propiedad?.meters}
-                            operation={propiedad?.operation}
+                            price={propiedad?.defaultCost}
+                            location={propiedad?.clientdata?.address}
+                            bedrooms={propiedad?.clientdata?.bedrooms}
+                            bathrooms={propiedad?.clientdata?.bathrooms}
+                            parking={propiedad?.clientdata?.parking}
                             onClick={() => handleRouter(propiedad.id)}
                         />
                     ))

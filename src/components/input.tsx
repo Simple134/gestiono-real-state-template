@@ -57,7 +57,7 @@ const InfoInput = () => {
                     rows={4}
                 ></textarea>
             </div>
-            <ButtonMail text="Enviar Mensaje" type="submit" visible={true}/>
+            <ButtonMail text="Enviar Mensaje" type="submit" visible={true} />
         </form>
     );
 };

@@ -4,21 +4,16 @@ import { formatted } from "./formatted";
 import { HeartIcon, BathIcon, BedIcon, ParkingIcon } from "./icons";
 import Image from "next/image";
 import { Container } from "@bitnation-dev/components";
-type CardProps = {
-    type?: "venta" | "renta";
-    TP?: "Apartamento" | "Casa" | "Condominio" | "EcoAmigable";
-    id?: number;
-    price: number;
-    bathrooms: number;
-    bedrooms: number;
-    parking: number;
-    operation: string;
+
+const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, onClick }:{
     multimedia: string;
+    price: number;
     location: string;
-    meters: number;
+    bedrooms: string;
+    bathrooms: string;
+    parking: string;
     onClick?: () => void;
-}
-const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, meters, onClick }: CardProps) => {
+}) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const toggleFavorite = () => {
@@ -52,7 +47,6 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, mete
                         <p className="text-sm text-gray-500">{parking ? parking + " Parking" : "- Parking"}</p>
                     </div>
                 </div>
-                <p className="text-sm text-black pt-4">{meters ? meters + " m2" : "- m2"}</p>
                 <p className="text-sm text-[#3B4504] pt-2">{location ? location : "-"}</p>
             </div>
         </div>

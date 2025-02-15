@@ -11,8 +11,8 @@
     "test": "echo \"No tests yet\""
   },
   "dependencies": {
-    "@bitnation-dev/components": "^1.9.6",
-    "@bitnation-dev/management": "^1.9.2",
+    "@bitnation-dev/components": "^2.0.4",
+    "@bitnation-dev/management": "^2.1.0",
     "@bitnation-dev/service": "^1.0.6",
     "@types/styled-components": "^5.1.34",
     "framer-motion": "^11.13.1",

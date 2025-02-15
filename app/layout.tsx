@@ -3,6 +3,7 @@ import "../src/globals.css";
 import Header from "@/header";
 import Footer from "@/footer";
 import StyledComponentsRegistry from "./registry";
+import { StoreProvider } from "@/components/store";
 
 
 
@@ -20,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StyledComponentsRegistry>
-          <Header />
-          {children}
-          <Footer />
-        </StyledComponentsRegistry>
+        <StoreProvider>
+          <StyledComponentsRegistry>
+            <Header />
+            {children}
+            <Footer />
+          </StyledComponentsRegistry>
+        </StoreProvider>
       </body>
     </html>
   );

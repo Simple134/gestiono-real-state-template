@@ -280,18 +280,18 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@bitnation-dev/components@^1.9.6":
-  version "1.9.18"
-  resolved "https://npm.pkg.github.com/download/@bitnation-dev/components/1.9.18/71558f937291251890bb6035cda327e428a15f87#71558f937291251890bb6035cda327e428a15f87"
-  integrity sha512-KlId9+sWtfcvhqZQweQLe0MYV+4LwWqb3snYY+K6MEhxDhBleR/u6pHg4LQuoYFSxGhAJdSCkF+34eiyes5V5Q==
+"@bitnation-dev/components@^2.0.4":
+  version "2.0.4"
+  resolved "https://npm.pkg.github.com/download/@bitnation-dev/components/2.0.4/9bf62a0ccf81d09dc0cb4225dac6ffb9ddd3828b#9bf62a0ccf81d09dc0cb4225dac6ffb9ddd3828b"
+  integrity sha512-ISUxU08A7u4xbX0Figh/g7/f3llteodJML8GpvE2UHuYfXSm9FhCyg2JVryJT10wVEl8JhCt/9kmEmV0OzcJyA==
   dependencies:
     lottie-react "^2.4.0"
     match-sorter "^6.3.4"
 
-"@bitnation-dev/management@^1.9.2":
-  version "1.9.2"
-  resolved "https://npm.pkg.github.com/download/@bitnation-dev/management/1.9.2/9aa3ddc67bb7d85680adff4097593084dcfd1de8#9aa3ddc67bb7d85680adff4097593084dcfd1de8"
-  integrity sha512-FA11Rf5uIljCqtxivtuJ3g0kP9J5qYL+HV0VIvQWE55nLI1aJz4iculTNUIvsqM+LXtZRQq6hCMujhXvleSkgA==
+"@bitnation-dev/management@^2.1.0":
+  version "2.1.0"
+  resolved "https://npm.pkg.github.com/download/@bitnation-dev/management/2.1.0/2bc63009ecd0e959573fc6529e98281593cea4d2#2bc63009ecd0e959573fc6529e98281593cea4d2"
+  integrity sha512-bdDxzaBiIh7cY07rDdiRBRVP+ktxHh7xmo/lrUheltgV6evVgRNLJrvmxHCvqUQ7os3PNJCMRPCLQHNIVD0r4w==
   dependencies:
     tsc-alias "^1.8.10"
     validator "^13.6.0"

@@ -8,13 +8,13 @@ import { Button1, ButtonMail, ButtonWhatsapp } from "@/components/button";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import InfoInput from "@/components/input";
-import Propiedades from "@/propertiesProp";
 import { MainIcon } from "@/components/icons";
 import Link from 'next/link';
-
+import { PropertyType } from "@/propertyType";
+import { useStore } from "@/components/store";
 
 export default function Home() {
-    const [data, setData] = useState<Propiedades[]>([]);
+    const [data, setData] = useState<PropertyType[]>([]);
     const [, setError] = useState<string | null>(null);
     const [infoInput, setInfoInput] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -22,6 +22,7 @@ export default function Home() {
     const pathname = usePathname()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState('');
+    const {  setMoreProperties } = useStore()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,8 +32,8 @@ export default function Home() {
                     throw new Error('Error al cargar las propiedades');
                 }
                 const result = await response.json();
-                console.log(result, "result")
                 setData(result);
+                setMoreProperties(result)
                 setLoading(false);
             } catch (error) {
                 setError((error as Error).message);
@@ -151,13 +152,11 @@ export default function Home() {
                             <Card
                                 key={propiedad?.id}
                                 multimedia={propiedad?.image[0]}
-                                price={propiedad?.price}
-                                location={propiedad?.location}
-                                bedrooms={propiedad?.bedrooms}
-                                bathrooms={propiedad?.bathrooms}
-                                parking={propiedad?.parking}
-                                meters={propiedad?.meters}
-                                operation={propiedad?.operation}
+                                price={propiedad?.defaultCost}
+                                location={propiedad?.clientdata?.address}
+                                bedrooms={propiedad?.clientdata?.bedrooms}
+                                bathrooms={propiedad?.clientdata?.bathrooms}
+                                parking={propiedad?.clientdata?.parking}
                                 onClick={() => handleRouter(propiedad.id)}
                             />
                         ))
@@ -195,8 +194,8 @@ export default function Home() {
                                         inversiones inmobiliarias
                                     </p>
                                     <div className="flex space-x-4 py-4">
-                                        <ButtonMail text="Contáctanos" onClick={handleInfoInput} visible={true} />
-                                        <ButtonWhatsapp text="Contáctanos" />
+                                        <ButtonMail text="Contáctanos" onClick={handleInfoInput} visible={true} width="100%" />
+                                        <ButtonWhatsapp text="Contáctanos" width="100%" />
                                     </div>
                                 </div>
                             )}

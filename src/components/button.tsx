@@ -22,12 +22,15 @@ export const Button1 = ({ text, icon, onClick, color, width }: ButtonProps) => {
 }
 
 
-export const ButtonMail = ({ text, onClick, type, visible }: ButtonProps) => {
+export const ButtonMail = ({ text, onClick, type, visible, width }: ButtonProps) => {
     return (
-        <button className={`bg-[#9C9C78] text-white px-4 py-2 flex items-center cursor-pointer space-x-4 h-12 justify-center ${visible ? 'visible' : 'hidden'}`}  onClick={onClick} type={type}>
+        <button className={`bg-[#9C9C78] text-white  flex items-center cursor-pointer space-x-4 h-12 justify-center ${visible ? 'visible' : 'hidden'} `} 
+            style={{ width: width }}
+            onClick={onClick} type={type}>
             <MailIcon /> 
             <p>{text}</p>
         </button>
+
     )
 }
 

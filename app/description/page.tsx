@@ -1,6 +1,6 @@
-import { Gestiono } from "@bitnation-dev/management/dist/package/src/server";
+import { Gestiono } from "@bitnation-dev/management/server";
 import { Description } from "./content";
-import Propiedades from "@/propertiesProp";
+import { PropertyType } from "@/propertyType";
 
 export default async function PropertyPage({
     searchParams
@@ -14,27 +14,25 @@ export default async function PropertyPage({
         return <div>Property not found</div>
     }
 
-    const data: Propiedades = {
+    const data: PropertyType = {
       id: properties?.id,
-      title: properties?.name,
       name: properties?.name,
-      sellPrice: properties?.sellPrice || 0,
-      price: properties?.sellPrice || 0,
+      defaultCost: properties?.defaultCost || 0,
       description: properties?.description || "",
       image: properties?.multimedia?.map((media: {url: string}) => media.url) || [],
-      type: properties?.type,
-      // @ts-expect-error not in type yet
-      location: properties?.clientdata?.location || 'Punta cana',
-      // @ts-expect-error not in type yet
-      bathrooms: properties?.clientdata?.bathrooms,
-      // @ts-expect-error not in type yet
-      bedrooms: properties?.clientdata?.bedrooms,
-      // @ts-expect-error not in type yet
-      parking: properties?.clientdata?.parking,
-      // @ts-expect-error not in type yet
-      meters: properties?.clientdata?.meters,
-      // @ts-expect-error not in type yet  
-      operation: properties?.clientdata?.operation,
+      clientdata:{
+        //@ts-ignore
+        address: properties?.clientdata?.location || 'Punta Cana',
+        //@ts-ignore
+        bathrooms: properties?.clientdata?.bathrooms,
+        //@ts-ignore
+        bedrooms: properties?.clientdata?.bedrooms,
+        //@ts-ignore
+        parking: properties?.clientdata?.parking,
+        //@ts-ignore
+        propertyType: properties?.clientdata?.propertyType,
+      }
+
     };
 
     return <Description data={data} />
