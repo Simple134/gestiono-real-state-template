@@ -133,7 +133,7 @@ export default function Home() {
                     </div>
                 </div>
             </Container>
-            <Container className="h-[70vh] mt-10 overflow-x-auto">
+            <Container className="h-[100vh] mt-10 overflow-x-auto md:h-[90vh] lg:h-[80vh]">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3B4504] text-center sm:text-left">Proyectos Recomendados</h1>
                 <div className="flex overflow-x-auto space-x-4 pb-4">
                     {loading || data.length === 0 ? (
