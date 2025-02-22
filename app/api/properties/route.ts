@@ -9,7 +9,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       throw new Error("GESTIONO_API_URL is not defined");
     }
     const properties = await Gestiono.v2GetResources({
-      itemsPerPage: "10",
+      itemsPerPage: "12",
       page: "1",
     });
     const data: PropertyType[] = properties.items.map((property) => ({

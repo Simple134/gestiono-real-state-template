@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from 'framer-motion';
 import { PropertyType } from "@/propertyType";
 
-
 const ITEMS_PER_PAGE = 12;
 
 export default function Proyects() {
@@ -23,6 +22,13 @@ export default function Proyects() {
   const router = useRouter();
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const searchQuery = searchLocation;
+  const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([]);
+  const [selectedPropertyBedrooms, setSelectedPropertyBedrooms] = useState<string[]>([]);
+  const [selectedPropertyBathrooms, setSelectedPropertyBathrooms] = useState<string[]>([]);
+  const [selectedPropertyParking, setSelectedPropertyParking] = useState<string[]>([]);
+ // const [selectedPropertyPriceMin, setSelectedPropertyPriceMin] = useState<number>(0);
+ // const [selectedPropertyPriceMax, setSelectedPropertyPriceMax] = useState<number>(0);
+
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -48,12 +54,45 @@ export default function Proyects() {
     fetchData();
   }, []); 
 
+  const filteredData = data.filter((propiedad) => {
 
+    //const matchesPropertyPriceMin = propiedad.defaultCost >= selectedPropertyPriceMin;
+    //const matchesPropertyPriceMax = propiedad.defaultCost <= selectedPropertyPriceMax;
 
-    const filteredData = data.filter((propiedad) =>
-      propiedad.name.toLowerCase().includes(searchLocation.toLowerCase()) || 
-      propiedad.clientdata?.address?.toLowerCase().includes(searchLocation.toLowerCase())
+    const matchesPropertyParking = 
+    selectedPropertyParking.length === 0 || 
+    selectedPropertyParking.some(type => 
+      propiedad.clientdata?.parking?.toLowerCase() === type.toLowerCase()
     );
+
+    const matchesPropertyBathrooms = 
+    selectedPropertyBathrooms.length === 0 || 
+    selectedPropertyBathrooms.some(type => 
+      propiedad.clientdata?.bathrooms?.toLowerCase() === type.toLowerCase()
+    );
+
+    const matchesPropertyBedrooms = 
+    selectedPropertyBedrooms.length === 0 || 
+    selectedPropertyBedrooms.some(type => 
+      propiedad.clientdata?.bedrooms?.toLowerCase() === type.toLowerCase()
+    );
+
+
+    // Filtro de tipo de propiedad
+    const matchesPropertyType = 
+      selectedPropertyTypes.length === 0 || 
+      selectedPropertyTypes.some(type => 
+        propiedad.clientdata?.propertyType?.toLowerCase() === type.toLowerCase()
+      );
+
+    // Filtro de ubicación
+    const matchesLocation = 
+      searchLocation === '' || 
+      propiedad.name.toLowerCase().includes(searchLocation.toLowerCase()) || 
+      propiedad.clientdata?.address?.toLowerCase().includes(searchLocation.toLowerCase());
+
+    return matchesPropertyType && matchesLocation && matchesPropertyBedrooms && matchesPropertyBathrooms && matchesPropertyParking;
+  });
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -104,7 +143,16 @@ useEffect(() => {
           <Container>
             <div className="flex flex-col md:flex-row md:space-x-8">
               <div className="hidden md:block text-black w-full md:w-auto mb-4 md:mb-0">
-                <Filter results={filteredData.length} showMobileFilter={showMobileFilter}/>
+                <Filter 
+                  results={filteredData.length} 
+                  showMobileFilter={showMobileFilter}
+                  onPropertyTypeChange={setSelectedPropertyTypes}
+                  onPropertyBedroomsChange={setSelectedPropertyBedrooms}
+                  onPropertyBathroomsChange={setSelectedPropertyBathrooms}
+                  onPropertyParkingChange={setSelectedPropertyParking}
+                  //onPropertyPriceMinChange={setSelectedPropertyPriceMin}
+                  //onPropertyPriceMaxChange={setSelectedPropertyPriceMax}
+                />
               </div>
               <div className="text-black w-full">
                 <div className="flex flex-col lg:flex-row gap-4 mb-4">
@@ -222,7 +270,11 @@ useEffect(() => {
               transition={{ type: "spring", bounce: 0, duration: 0.4 }}
               className="fixed top-0 left-0 h-full w-80 z-50 md:hidden text-black"
             >
-              <Filter results={filteredData.length} showMobileFilter={showMobileFilter}/>
+              <Filter 
+                results={filteredData.length} 
+                showMobileFilter={showMobileFilter}
+                onPropertyTypeChange={setSelectedPropertyTypes}
+              />
             </motion.div>
 
             <motion.div 

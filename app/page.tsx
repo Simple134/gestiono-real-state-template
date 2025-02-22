@@ -133,39 +133,37 @@ export default function Home() {
                     </div>
                 </div>
             </Container>
-            <Container className="h-[85lvh] mt-10">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3B4504] text-center sm:text-left" >Proyectos Recomendados</h1>
-                <Grid columns={{ xl: 4, md: 1, sm: 1, }}>
-
+            <Container className="h-[70vh] mt-10 overflow-x-auto">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3B4504] text-center sm:text-left">Proyectos Recomendados</h1>
+                <div className="flex overflow-x-auto space-x-4 pb-4">
                     {loading || data.length === 0 ? (
-                        <div className="flex flex-col gap-4">
-                            {Array.from({ length: 1 }).map((_, index) => (
-                                <div key={index} className="animate-pulse flex flex-col space-y-4 p-4 border ">
-                                    <div className="bg-gray-300 h-72 w-[95%] "></div>
-                                    <div className="bg-gray-300 h-6 w-3/4"></div>
-                                    <div className="bg-gray-300 h-6 w-[95%]  "></div>
-                                </div>
-                            ))}
-                        </div>
+                        Array.from({ length: 4 }).map((_, index) => (
+                            <div key={index} className="flex-shrink-0 w-72 animate-pulse flex flex-col space-y-4 p-4 border">
+                                <div className="bg-gray-300 h-72 w-full"></div>
+                                <div className="bg-gray-300 h-6 w-3/4"></div>
+                                <div className="bg-gray-300 h-6 w-full"></div>
+                            </div>
+                        ))
                     ) : (
                         data.map((propiedad) => (
-                            <Card
-                                key={propiedad?.id}
-                                multimedia={propiedad?.image[0]}
-                                price={propiedad?.defaultCost}
-                                location={propiedad?.clientdata?.address}
-                                bedrooms={propiedad?.clientdata?.bedrooms}
-                                bathrooms={propiedad?.clientdata?.bathrooms}
-                                parking={propiedad?.clientdata?.parking}
-                                onClick={() => handleRouter(propiedad.id)}
-                            />
+                            <div key={propiedad?.id} className="flex-shrink-0 w-72">
+                                <Card
+                                    multimedia={propiedad?.image[0]}
+                                    price={propiedad?.defaultCost}
+                                    location={propiedad?.clientdata?.address}
+                                    bedrooms={propiedad?.clientdata?.bedrooms}
+                                    bathrooms={propiedad?.clientdata?.bathrooms}
+                                    parking={propiedad?.clientdata?.parking}
+                                    onClick={() => handleRouter(propiedad.id)}
+                                />
+                            </div>
                         ))
                     )}
-                </Grid>
-                <div className="flex justify-end">
+                </div>
+                <div className="flex justify-end mt-4">
                     <Button1 text="Mas Proyectos Similares" icon onClick={() => router.push('/proyects')} />
                 </div>
-            </Container >
+            </Container>
             <Container className="bg-[#F5F5F5] [&>.container-inside]:!p-0 mt-10 sm:flex-col">
                 <div >
                     <Grid columns={{ xl: 2, md: 1, sm: 1 }}>

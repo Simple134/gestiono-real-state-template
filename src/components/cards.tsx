@@ -22,9 +22,9 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, onCl
 
     return (
         <Container>
-        <div className="flex flex-col mt-4 p-1 cursor-pointer ">
+        <div className="flex flex-col mt-4 cursor-pointer w-72 ">
             <div className="relative w-full">
-                {multimedia ? <Image onClick={onClick} width={500} height={500} src={multimedia} alt="" className="aspect-square object-cover w-full h-full" /> : <div className="w-full h-full bg-gray-200"> No Image Available</div>}
+                {multimedia ? <Image onClick={onClick} width={600} height={600} src={multimedia} alt="" className="object-cover w-full h-full" style={{ aspectRatio: 4/3 }} /> : <div className="w-full h-full bg-gray-200"> No Image Available</div>}
                 <button className="absolute top-2 right-2" onClick={toggleFavorite}>
                     <HeartIcon color={isFavorite} />
                 </button>
