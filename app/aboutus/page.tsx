@@ -110,9 +110,9 @@ const AboutUs = () => {
                             Nuestra Oficina
                         </h1>
                         <div className="flex flex-col md:flex-row">
-                            <div className="w-full md:w-1/2 mb-4 md:mb-0">
+                          { /* <div className="w-full md:w-1/2 mb-4 md:mb-0">
                                 <Image src={"/imagenH.png"} alt="" width={700} height={500} className="w-full h-auto" />
-                            </div>
+                            </div> */}
                             <div className="hidden md:block lg:block w-1/2">
                                 <div className="mapContainer w-full">
                                     <iframe
@@ -152,7 +152,7 @@ const AboutUs = () => {
                                         width={425}
                                         height={425}
                                         quality={100}
-                                        className="w-full md:w-auto"
+                                        className=" "
                                     />
                                 </div>
                                 <h2 className="text-2xl font-bold text-center py-6 md:hidden text-[#3B4504] ">
@@ -196,7 +196,7 @@ const AboutUs = () => {
                                                 rows={4}
                                             ></textarea>
                                         </div>
-                                        <div className="flex space-x-2 w-full grid grid-cols-2">
+                                        <div className="flex space-x-2 items-center justify-center">
                                         <ButtonMail text="Contáctanos" type="submit" visible={true} width="100%"/>
                                         <ButtonWhatsapp text="Contáctanos" width="100%" />
                                     </div>
