@@ -19,7 +19,15 @@ const AboutUs = () => {
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
         window.open(mapsUrl, '_blank')
     }
-        const [formData, setFormData] = useState({
+
+    const handleScrollToContact = () => {
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    const [formData, setFormData] = useState({
         nombre: '',
         email: '',
         mensaje: ''
@@ -65,7 +73,7 @@ const AboutUs = () => {
                             </p>
                         </div>
                         <div className="mt-4">
-                            <Button1 text="Hablemos" icon />
+                            <Button1 text="Hablemos" icon onClick={handleScrollToContact} />
                         </div>
                     </div>
                     <div className="lg:flex lg:items-end lg:justify-end lg:mb-20 hidden lg:block ">
@@ -160,7 +168,7 @@ const AboutUs = () => {
                                 </h2>
                                 <p className="text-md text-[#757575] pl-4 md:hidden ">Elimina dudas o busca donde invertir con la asistencia de un experto en inversiones inmobiliarias</p>
                             </div>
-                            <div className="flex justify-center items-center order-2 md:order-none w-3/4">
+                            <div id="contact-form" className="flex justify-center items-center order-2 md:order-none w-3/4">
                                 <div className="w-full px-4 md:px-0">
                                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-full px-4 md:px-0">
                                         <div className="w-full">
