@@ -25,7 +25,6 @@ export const SideFilter = ({ title, options, onFilterChange }: SideFilterProps) 
         
         setSelectedOptions(updatedOptions);
         
-        console.log(`Filtros de ${title}:`, updatedOptions);
         
         if (onFilterChange) {
             onFilterChange(updatedOptions);

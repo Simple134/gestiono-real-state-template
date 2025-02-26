@@ -45,7 +45,6 @@ export const Description = ({ data }: { data: PropertyType }) => {
     };
   }, [isModalOpen]);
 
-  console.log(data, "data");
 
   return (
     <>
@@ -55,7 +54,7 @@ export const Description = ({ data }: { data: PropertyType }) => {
         </div>
         <div className="flex flex-wrap gap-4 items-center px-4 md:px-0">
           <h1 className="text-xl md:text-2xl text-[#3B4504] font-bold">
-            {"US$" + formatted(data.defaultCost)}
+            {data.sellPriceCurrency + "$ " + formatted(data.sellPrice)}
           </h1>
           <div className="flex items-center space-x-2">
             <BathIcon />
@@ -269,7 +268,8 @@ export const Description = ({ data }: { data: PropertyType }) => {
                       <div key={id} className="min-w-[280px] md:min-w-[320px]">
                         <Card
                           multimedia={propiedad?.image?.[0]}
-                          price={propiedad.defaultCost}
+                          price={propiedad.sellPrice}
+                          currency={propiedad.sellPriceCurrency}
                           location={propiedad.clientdata?.address}
                           bedrooms={propiedad.clientdata?.bedrooms}
                           bathrooms={propiedad.clientdata?.bathrooms}

@@ -148,8 +148,9 @@ export default function Home() {
                         data.map((propiedad) => (
                             <div key={propiedad?.id} className="flex-shrink-0 w-72">
                                 <Card
+                                    currency={propiedad?.sellPriceCurrency}
                                     multimedia={propiedad?.image[0]}
-                                    price={propiedad?.defaultCost}
+                                    price={propiedad?.sellPrice}
                                     location={propiedad?.clientdata?.address}
                                     bedrooms={propiedad?.clientdata?.bedrooms}
                                     bathrooms={propiedad?.clientdata?.bathrooms}

@@ -14,10 +14,12 @@ export default async function PropertyPage({
         return <div>Property not found</div>
     }
 
+
     const data: PropertyType = {
       id: properties?.id,
       name: properties?.name,
-      defaultCost: properties?.defaultCost || 0,
+      sellPrice: properties?.sellPrice || 0,
+      sellPriceCurrency: properties?.sellCurrency || "",
       description: properties?.description || "",
       image: properties?.multimedia?.map((media: {url: string}) => media.url) || [],
       clientdata:{

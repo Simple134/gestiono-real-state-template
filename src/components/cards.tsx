@@ -5,13 +5,14 @@ import { HeartIcon, BathIcon, BedIcon, ParkingIcon } from "./icons";
 import Image from "next/image";
 import { Container } from "@bitnation-dev/components";
 
-const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, onClick }:{
+const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, currency, onClick }:{
     multimedia: string;
     price: number;
     location: string;
     bedrooms: string;
     bathrooms: string;
     parking: string;
+    currency: string;
     onClick?: () => void;
 }) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -31,7 +32,7 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, onCl
             </div>
             <div className="flex flex-col w-full">
                 <div className="py-4">
-                    <h1 className="text-2xl text-[#3B4504] font-bold">{"US$" + formatted(price)}</h1>
+                    <h1 className="text-2xl text-[#3B4504] font-bold">{currency + "$ " + formatted(price)}</h1>
                 </div>
                 <div className="flex space-x-4">
                     <div className="flex items-center space-x-2">

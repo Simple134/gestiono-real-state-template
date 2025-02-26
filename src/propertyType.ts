@@ -3,7 +3,8 @@ export interface PropertyType{
     id: number;
     name: string;
     description: string;
-    defaultCost: number;
+    sellPrice: number;
+    sellPriceCurrency: string;
     image: string[];
     clientdata: {
       bathrooms: string;

@@ -16,8 +16,8 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       id: property?.id,
       name: property?.name || '',
       description: property?.description || '',
-      price: property?.defaultCost || 0,
-      defaultCost: property?.defaultCost || 0,
+      sellPrice: property?.sellPrice || 0,
+      sellPriceCurrency: property?.sellPriceCurrency || '',
       image: property?.multimedia?.map((media: { url: string }) => media.url) || [],
       clientdata: {
         //@ts-expect-error-ignore

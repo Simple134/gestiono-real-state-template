@@ -220,7 +220,8 @@ useEffect(() => {
                         <Card
                             key={propiedad?.id}
                             multimedia={propiedad?.image[0]}
-                            price={propiedad?.defaultCost}
+                            price={propiedad?.sellPrice}
+                            currency={propiedad?.sellPriceCurrency}
                             location={propiedad?.clientdata?.address}
                             bedrooms={propiedad?.clientdata?.bedrooms}
                             bathrooms={propiedad?.clientdata?.bathrooms}
