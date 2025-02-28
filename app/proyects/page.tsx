@@ -219,6 +219,7 @@ useEffect(() => {
                      currentData.map((propiedad: PropertyType) => (
                         <Card
                             key={propiedad?.id}
+                            id={propiedad?.id}
                             multimedia={propiedad?.image[0]}
                             price={propiedad?.sellPrice}
                             currency={propiedad?.sellPriceCurrency}

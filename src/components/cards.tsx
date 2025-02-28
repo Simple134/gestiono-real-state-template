@@ -5,7 +5,7 @@ import { HeartIcon, BathIcon, BedIcon, ParkingIcon } from "./icons";
 import Image from "next/image";
 import { Container } from "@bitnation-dev/components";
 
-const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, currency, onClick }:{
+const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, currency, onClick, id }:{
     multimedia: string;
     price: number;
     location: string;
@@ -14,13 +14,32 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
     parking: string;
     currency: string;
     onClick?: () => void;
+    id: number;
 }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const savedFavorites = localStorage.getItem('favorites');
+            const favoritesArray = savedFavorites ? JSON.parse(savedFavorites) : [];
+            return favoritesArray?.includes(id);
+        }
+        return false;
+    });
 
     const toggleFavorite = () => {
-        setIsFavorite(prev => !prev);
+        const savedFavorites = localStorage.getItem('favorites');
+        let favoritesArray = savedFavorites ? JSON.parse(savedFavorites) : [];
+        if (!Array.isArray(favoritesArray)) {
+            favoritesArray = [];
+        }
+        if (isFavorite) {
+            const newFavorites = favoritesArray.filter((favId: number) => favId !== id);
+            localStorage.setItem('favorites', JSON.stringify(newFavorites));
+        } else {
+            favoritesArray.push(id);
+            localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+        }
+        setIsFavorite((prev: boolean) => !prev);
     }
-
     return (
         <Container>
         <div className="flex flex-col mt-4 cursor-pointer w-72 ">

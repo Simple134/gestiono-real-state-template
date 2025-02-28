@@ -267,6 +267,7 @@ export const Description = ({ data }: { data: PropertyType }) => {
                     .map((propiedad, id) => (
                       <div key={id} className="min-w-[280px] md:min-w-[320px]">
                         <Card
+                          id={propiedad.id}
                           multimedia={propiedad?.image?.[0]}
                           price={propiedad.sellPrice}
                           currency={propiedad.sellPriceCurrency}
