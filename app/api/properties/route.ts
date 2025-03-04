@@ -6,12 +6,24 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
     if (!process.env.GESTIONO_API_URL) {
+      console.error("GESTIONO_API_URL no está definida en las variables de entorno");
       throw new Error("GESTIONO_API_URL is not defined");
     }
+    
+    if (!process.env.GESTIONO_API_KEY || !process.env.GESTIONO_API_SECRET) {
+      console.error("Faltan credenciales de API en las variables de entorno");
+      throw new Error("API credentials are missing");
+    }
+    
+    console.log("Iniciando solicitud a Gestiono API...");
+    
     const properties = await Gestiono.v2GetResources({
       itemsPerPage: "12",
       page: "1",
     });
+    
+    console.log(`Propiedades recibidas: ${properties.items.length}`);
+    
     const data: PropertyType[] = properties.items.map((property) => ({
       id: property?.id,
       name: property?.name || '',
@@ -32,11 +44,18 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
         address: property.clientdata?.address,
       },
     }));
+    
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error al obtener las casas:", error);
+    console.error("Error detallado al obtener las propiedades:", error);
+    
+    // Devolver información más detallada sobre el error
     return NextResponse.json(
-      { error: "Error al obtener las casas" },
+      { 
+        error: "Error al obtener las propiedades", 
+        details: (error as Error).message,
+        stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined
+      },
       { status: 500 }
     );
   }
