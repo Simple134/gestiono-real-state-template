@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ButtonMail } from './button';
 
-const InfoInput = () => {
+const InfoInput = ({ propertyId, propertyName, propertyUrl }: { propertyId?: number; propertyName?: string; propertyUrl?: string }) => {
     const [formData, setFormData] = useState({
         nombre: '',
         email: '',
@@ -10,7 +10,7 @@ const InfoInput = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const mailtoLink = `mailto:emiragroupinfo@gmail.com?subject=Nuevo mensaje de contacto&body=Nombre: ${formData.nombre}%0D%0AEmail: ${formData.email}%0D%0AMensaje: ${formData.mensaje}`;
+        const mailtoLink = `mailto:emiragroupinfo@gmail.com?subject=Nuevo mensaje de contacto&body=Nombre: ${formData.nombre}%0D%0AEmail: ${formData.email}%0D%0AMensaje: ${formData.mensaje} %0D%0APropiedad:${propertyId} ${propertyName} %0D%0AURL:${propertyUrl}`;
         window.location.href = mailtoLink;
     };
 

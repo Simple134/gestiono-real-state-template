@@ -16,12 +16,14 @@ import Contactanos from "@/components/contactanos";
 import Card from "@/components/cards";
 import { PropertyType } from "@/propertyType";
 import { useStore } from "@/components/store";
+import { usePathname } from "next/navigation";
 
 export const Description = ({ data }: { data: PropertyType }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const totalImages = data?.image.length || 0;
   const { moreProperties } = useStore();
+  const pathname = usePathname();
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -32,6 +34,10 @@ export const Description = ({ data }: { data: PropertyType }) => {
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % totalImages);
   };
+
+  const propertyUrl = typeof window !== 'undefined' 
+  ? `${window.location.origin}${pathname}?id=${data.id}` 
+  : pathname;
 
   useEffect(() => {
     if (isModalOpen) {
@@ -185,7 +191,7 @@ export const Description = ({ data }: { data: PropertyType }) => {
             </div>
           </div>
           <div className="hidden lg:block">
-            <Contactanos />
+          <Contactanos propertyId={data.id} propertyName={data.name} propertyUrl={propertyUrl} />
           </div>
         </div>
       </Container>
@@ -211,7 +217,7 @@ export const Description = ({ data }: { data: PropertyType }) => {
               >
                 ✕
               </button>
-              <Contactanos />
+              <Contactanos propertyId={data.id} propertyName={data.name} propertyUrl={propertyUrl} />
             </div>
           </div>
         )}
@@ -252,9 +258,7 @@ export const Description = ({ data }: { data: PropertyType }) => {
           </div>
           <div
             id="proyectos-similares"
-            className={`${
-              moreProperties && moreProperties.length > 1 ? "block" : "hidden"
-            } mb-10` }
+            className={`mb-10`} 
           >
             <h1 className="text-black text-2xl md:text-3xl font-bold ">
               Proyectos similares
@@ -262,24 +266,35 @@ export const Description = ({ data }: { data: PropertyType }) => {
             <div className="overflow-x-auto">
               <div className="flex gap-4 ">
                 {moreProperties && moreProperties.length > 0 ? (
-                  moreProperties
-                    .filter((propiedad) => propiedad.id !== data.id)
-                    .map((propiedad, id) => (
-                      <div key={id} className="min-w-[280px] md:min-w-[320px]">
-                        <Card
-                          id={propiedad.id}
-                          multimedia={propiedad?.image?.[0]}
-                          price={propiedad.sellPrice}
-                          currency={propiedad.sellPriceCurrency}
-                          location={propiedad.clientdata?.address}
-                          bedrooms={propiedad.clientdata?.bedrooms}
-                          bathrooms={propiedad.clientdata?.bathrooms}
-                          parking={propiedad.clientdata?.parking}
-                        />
-                      </div>
-                    ))
+                  (() => {
+                    const propiedadesFiltradas = moreProperties.filter(
+                      (propiedad) => propiedad.id !== data.id && 
+                      propiedad.clientdata.propertyType === data.clientdata.propertyType
+                    );
+                    
+                    return propiedadesFiltradas.length > 0 ? (
+                      propiedadesFiltradas.map((propiedad, id) => (
+                        <div key={id} className="min-w-[280px] md:min-w-[320px]">
+                          <Card
+                            id={propiedad.id}
+                            multimedia={propiedad?.image?.[0]}
+                            price={propiedad.sellPrice}
+                            currency={propiedad.sellPriceCurrency}
+                            location={propiedad.clientdata?.address}
+                            bedrooms={propiedad.clientdata?.bedrooms}
+                            bathrooms={propiedad.clientdata?.bathrooms}
+                            parking={propiedad.clientdata?.parking}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                        <p className="text-gray-500 text-2xl  text-center">
+                          No hay proyectos similares disponibles
+                        </p>
+                    );
+                  })()
                 ) : (
-                  <p className="text-black text-2xl md:text-3xl font-bold">
+                  <p className="text-gray-500 text-2xl  text-center">
                     No hay proyectos similares disponibles
                   </p>
                 )}

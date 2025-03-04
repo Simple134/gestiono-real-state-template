@@ -8,6 +8,7 @@ interface ButtonProps {
     visible?: boolean;
     color?: "primary" | "secondary" 
     width?: string;
+    mensajeWhatsApp?: string;
 }
 
 export const Button1 = ({ text, icon, onClick, color, width }: ButtonProps) => {
@@ -58,9 +59,10 @@ export const ButtonWhatsapp = ({ text, onClick, width }: ButtonProps) => {
 }
 
 
-export const ButtonInformation = ({ text, onClick, width, icon }: ButtonProps) => {
+export const ButtonInformation = ({ text, onClick, width, icon, mensajeWhatsApp }: ButtonProps) => {
     const phoneNumber = "8495198432";
-    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+    const mensaje = encodeURIComponent(mensajeWhatsApp || "Hola, estoy interesado en obtener más información.");
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${mensaje}`;
 
     const handleWhatsAppClick = () => {
         if (onClick) onClick();

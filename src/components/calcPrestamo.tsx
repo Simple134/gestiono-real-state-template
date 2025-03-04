@@ -39,7 +39,13 @@ const CalcPrestamo = () => {
         }
     }, [tasaInteres, inicial, tiempo, precioVivienda, calcularAmortizacion]);
 
-    
+    const crearMensajeWhatsApp = () => {
+        return `Hola, estoy interesado en obtener más información sobre un préstamo. He calculado una mensualidad de ${mensualidad} con los siguientes datos:
+- Precio de vivienda: ${precioVivienda}
+- Inicial: ${inicial}
+- Tasa de interés: ${tasaInteres}
+- Plazo: ${tiempo} año(s)`;
+    };
 
     return (
         <div className="p-4 md:p-6 lg:p-8 max-w-2xl mx-auto">
@@ -113,6 +119,7 @@ const CalcPrestamo = () => {
                     <ButtonInformation 
                         text="Obtener más información" 
                         icon 
+                        mensajeWhatsApp={crearMensajeWhatsApp()}
                     />
                 </div>
             </div>

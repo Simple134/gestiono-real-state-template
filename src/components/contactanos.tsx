@@ -2,7 +2,7 @@ import Image from "next/image";
 import InfoInput from "./input";
 import {  ButtonWhatsapp } from "./button";
 
-const Contactanos = () => {
+const Contactanos = ({ propertyId, propertyName, propertyUrl }: { propertyId: number; propertyName: string; propertyUrl: string }) => {
     return (
         <div className="flex flex-col space-y-2 px-2 sm:px-4 w-full  mt-4 lg:mt-0 py-4">
             <h1 className="text-xl sm:text-2xl font-bold text-black">CONTACTOS</h1>
@@ -29,7 +29,7 @@ const Contactanos = () => {
                     </p>
                 </div>
             </div>
-            <InfoInput />
+            <InfoInput propertyId={propertyId} propertyName={propertyName} propertyUrl={propertyUrl} />
             <ButtonWhatsapp text="Contáctanos" />
         </div>
 

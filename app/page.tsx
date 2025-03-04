@@ -58,6 +58,10 @@ export default function Home() {
         }
     };
 
+    const handleCitySearch = (name: string) => {
+        router.push(`/proyects?search=${encodeURIComponent(name.trim())}`);
+    };
+
     return (
         <>
             <Container style={{ 
@@ -211,7 +215,7 @@ export default function Home() {
                     <p className="text-xl md:text-2xl text-[#757575]  md:text-left sm:text-left font-[poppins]">
                         Busca proyectos en las ciudades con mayor crecimiento del país
                     </p>
-                    <CityCard />
+                    <CityCard onClick={handleCitySearch} />
                     <Button1 text="Busca por Ciudad" icon onClick={() => router.push('/proyects')} color="primary"/>
                 </div>
             </Container>

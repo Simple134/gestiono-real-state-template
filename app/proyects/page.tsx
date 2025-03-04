@@ -17,11 +17,13 @@ export default function Proyects() {
   const [data, setData] = useState<PropertyType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchLocation, setSearchLocation] = useState('');
+  const [city, setCity] = useState('');
   const [, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const searchQuery = searchLocation;
+  const cityQuery = city;
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([]);
   const [selectedPropertyBedrooms, setSelectedPropertyBedrooms] = useState<string[]>([]);
   const [selectedPropertyBathrooms, setSelectedPropertyBathrooms] = useState<string[]>([]);
@@ -33,7 +35,9 @@ export default function Proyects() {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const searchQuery = searchParams.get('search') || '';
+    const cityQuery = searchParams.get('search') || '';
     setSearchLocation(searchQuery);
+    setCity(cityQuery);
   }, []);
 
   useEffect(() => {
@@ -191,8 +195,8 @@ useEffect(() => {
                 </div>
 
                 <h1 className="text-2xl font-bold pt-4 pl-4">
-                  {searchQuery 
-                    ? `RESULTADOS PARA "${searchQuery.toUpperCase()}"`
+                  {searchQuery || cityQuery
+                    ? `RESULTADOS PARA "${searchQuery.toUpperCase() || cityQuery.toUpperCase()}"`
                     : "INMUEBLES "}
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8">
@@ -209,9 +213,9 @@ useEffect(() => {
                 ) : currentData.length === 0 ? (
                     <div className="col-span-full flex justify-center items-center py-10">
                         <p className="text-xl text-gray-600 font-semibold">
-                            {searchQuery === '' 
+                            {searchQuery === '' || cityQuery === ''
                               ? "No hay datos disponibles"
-                              : `No se encontraron resultados para "${searchQuery.toUpperCase()}"`
+                              : `No se encontraron resultados para "${searchQuery.toUpperCase() || cityQuery.toUpperCase()}"`
                             }
                         </p>
                     </div>

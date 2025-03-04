@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <Container className="bg-black ">
                     <div className="col-span-1 flex flex-col items-start">
-                        <div className="pb-4 cursor-pointer flex md:justify-center justify-start " onClick={() => router.push("/")}>
+                        <div className="pb-8 cursor-pointer flex md:justify-center justify-start " onClick={() => router.push("/")}>
                             <MainIcon />
                         </div>
                         <p className=" text-left">
