@@ -14,3 +14,13 @@ export interface PropertyType{
       propertyType: string;
     };
   };
+
+ export type Filters = {
+  propertyUsage: "buy" | "rent";
+  propertyTypes: string[];
+  propertyBedrooms: string[];
+  propertyBathrooms: string[];
+  propertyParking: string[];
+  propertyPriceMin: number;
+  propertyPriceMax: number;
+}

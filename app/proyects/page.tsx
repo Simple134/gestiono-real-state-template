@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from 'framer-motion';
-import { PropertyType } from "@/propertyType";
+import { Filters, PropertyType } from "@/propertyType";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -24,13 +24,25 @@ export default function Proyects() {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const searchQuery = searchLocation;
   const cityQuery = city;
-  const [selectedPropertyTypes, setSelectedPropertyTypes] = useState<string[]>([]);
-  const [selectedPropertyBedrooms, setSelectedPropertyBedrooms] = useState<string[]>([]);
-  const [selectedPropertyBathrooms, setSelectedPropertyBathrooms] = useState<string[]>([]);
-  const [selectedPropertyParking, setSelectedPropertyParking] = useState<string[]>([]);
- // const [selectedPropertyPriceMin, setSelectedPropertyPriceMin] = useState<number>(0);
- // const [selectedPropertyPriceMax, setSelectedPropertyPriceMax] = useState<number>(0);
-
+  const [filters, _setFilters] = useState<Filters>({
+    propertyUsage: "buy",
+    propertyTypes: [],
+    propertyBedrooms: [],
+    propertyBathrooms: [],
+    propertyParking: [],
+    propertyPriceMin: 0,
+    propertyPriceMax: 0,
+  });
+  const setFilters = (filters: Partial<Filters>) => {
+    _setFilters((prev) => ({ ...prev, ...filters }));
+  };
+  const {
+    // propertyType: filteredPropertyType,
+    propertyTypes: filteredPropertyTypes,
+    propertyBedrooms: filteredPropertyBedrooms,
+    propertyBathrooms: filteredPropertyBathrooms,
+    propertyParking: filteredPropertyParking
+  } = filters;
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -54,45 +66,45 @@ export default function Proyects() {
         setError((error as Error).message);
       }
     };
-  
+
     fetchData();
-  }, []); 
+  }, []);
 
   const filteredData = data.filter((propiedad) => {
 
-    //const matchesPropertyPriceMin = propiedad.defaultCost >= selectedPropertyPriceMin;
-    //const matchesPropertyPriceMax = propiedad.defaultCost <= selectedPropertyPriceMax;
+    //const matchesPropertyPriceMin = propiedad.defaultCost >= filteredPropertyPriceMin;
+    //const matchesPropertyPriceMax = propiedad.defaultCost <= filteredPropertyPriceMax;
 
-    const matchesPropertyParking = 
-    selectedPropertyParking.length === 0 || 
-    selectedPropertyParking.some(type => 
-      propiedad.clientdata?.parking?.toLowerCase() === type.toLowerCase()
-    );
+    const matchesPropertyParking =
+      filteredPropertyParking.length === 0 ||
+      filteredPropertyParking.some(type =>
+        propiedad.clientdata?.parking?.toLowerCase() === type.toLowerCase()
+      );
 
-    const matchesPropertyBathrooms = 
-    selectedPropertyBathrooms.length === 0 || 
-    selectedPropertyBathrooms.some(type => 
-      propiedad.clientdata?.bathrooms?.toLowerCase() === type.toLowerCase()
-    );
+    const matchesPropertyBathrooms =
+      filteredPropertyBathrooms.length === 0 ||
+      filteredPropertyBathrooms.some(type =>
+        propiedad.clientdata?.bathrooms?.toLowerCase() === type.toLowerCase()
+      );
 
-    const matchesPropertyBedrooms = 
-    selectedPropertyBedrooms.length === 0 || 
-    selectedPropertyBedrooms.some(type => 
-      propiedad.clientdata?.bedrooms?.toLowerCase() === type.toLowerCase()
-    );
+    const matchesPropertyBedrooms =
+      filteredPropertyBedrooms.length === 0 ||
+      filteredPropertyBedrooms.some(type =>
+        propiedad.clientdata?.bedrooms?.toLowerCase() === type.toLowerCase()
+      );
 
 
     // Filtro de tipo de propiedad
-    const matchesPropertyType = 
-      selectedPropertyTypes.length === 0 || 
-      selectedPropertyTypes.some(type => 
+    const matchesPropertyType =
+      filteredPropertyTypes.length === 0 ||
+      filteredPropertyTypes.some(type =>
         propiedad.clientdata?.propertyType?.toLowerCase() === type.toLowerCase()
       );
 
     // Filtro de ubicación
-    const matchesLocation = 
-      searchLocation === '' || 
-      propiedad.name.toLowerCase().includes(searchLocation.toLowerCase()) || 
+    const matchesLocation =
+      searchLocation === '' ||
+      propiedad.name.toLowerCase().includes(searchLocation.toLowerCase()) ||
       propiedad.clientdata?.address?.toLowerCase().includes(searchLocation.toLowerCase());
 
     return matchesPropertyType && matchesLocation && matchesPropertyBedrooms && matchesPropertyBathrooms && matchesPropertyParking;
@@ -100,7 +112,7 @@ export default function Proyects() {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentData = filteredData.slice(startIndex, endIndex); 
+  const currentData = filteredData.slice(startIndex, endIndex);
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= Math.ceil(data.length / ITEMS_PER_PAGE)) {
@@ -110,24 +122,24 @@ export default function Proyects() {
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchLocation(e.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleRouter = (id: number) => {
     router.push(`/description?id=${id}`)
-}
-
-useEffect(() => {
-  if (showMobileFilter) {
-      document.body.classList.add('overflow-hidden');
-  } else {
-      document.body.classList.remove('overflow-hidden');
   }
 
-  return () => {
+  useEffect(() => {
+    if (showMobileFilter) {
+      document.body.classList.add('overflow-hidden');
+    } else {
       document.body.classList.remove('overflow-hidden');
-  };
-}, [showMobileFilter]);
+    }
+
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [showMobileFilter]);
 
   return (
     < >
@@ -135,33 +147,29 @@ useEffect(() => {
         <Container className=" bg-cover h-[20dvh] " style={{ backgroundImage: "url('/imagen3.png')" }}>
           <div className="flex flex-col  text-white ">
             <div className="mb-4 hidden lg:block">
-            <p className="font-['poppins']">
-              Home &gt; {pathname === "/proyects" ? pageName : pathname}
-            </p>
-          </div>
-          <h1 className="text-4xl font-bold font-['poppins'] uppercase">Inmuebles</h1>
+              <p className="font-['poppins']">
+                Home &gt; {pathname === "/proyects" ? pageName : pathname}
+              </p>
+            </div>
+            <h1 className="text-4xl font-bold font-['poppins'] uppercase">Inmuebles</h1>
           </div>
         </Container>
 
-          <Grid columns={{ xl: 1, md: 1, sm: 1 }}>
+        <Grid columns={{ xl: 1, md: 1, sm: 1 }}>
           <Container>
             <div className="flex flex-col md:flex-row md:space-x-8">
               <div className="hidden md:block text-black w-full md:w-auto mb-4 md:mb-0">
-                <Filter 
-                  results={filteredData.length} 
+                <Filter
+                  results={filteredData.length}
                   showMobileFilter={showMobileFilter}
-                  onPropertyTypeChange={setSelectedPropertyTypes}
-                  onPropertyBedroomsChange={setSelectedPropertyBedrooms}
-                  onPropertyBathroomsChange={setSelectedPropertyBathrooms}
-                  onPropertyParkingChange={setSelectedPropertyParking}
-                  //onPropertyPriceMinChange={setSelectedPropertyPriceMin}
-                  //onPropertyPriceMaxChange={setSelectedPropertyPriceMax}
+                  filters={filters}
+                  onFilterChange={(key) => (values) => setFilters({ [key]: values })}
                 />
               </div>
               <div className="text-black w-full">
                 <div className="flex flex-col lg:flex-row gap-4 mb-4">
                   <div className="flex justify-between items-center gap-2">
-                    <button 
+                    <button
                       onClick={() => setShowMobileFilter(!showMobileFilter)}
                       className="md:hidden flex items-center px-4 h-10 border-2 border-gray-500 hover:border-black bg-[#3B4504] text-white"
                     >
@@ -180,18 +188,18 @@ useEffect(() => {
                   </div>
                   <div className="relative flex items-center gap-2">
                     <div className="absolute left-2 ">
-                    <FindIcon />
+                      <FindIcon />
                     </div>
-                    <input 
-                      onChange={handleSearchChange} 
-                    type="text" 
-                    placeholder="Buscar por ciudad" 
-                    className="w-full h-10 pl-8 py-2 border-2 border-gray-500 bg-white text-black"/>
+                    <input
+                      onChange={handleSearchChange}
+                      type="text"
+                      placeholder="Buscar por ciudad"
+                      className="w-full h-10 pl-8 py-2 border-2 border-gray-500 bg-white text-black" />
                   </div>
                   <div className="hidden lg:flex flex-row items-center justify-between w-full h-10 border-2 border-gray-500 px-2 cursor-not-allowed">
-                      <p>Ordenar Por:  </p>
-                      <ArrowDownIcon />
-                    </div>
+                    <p>Ordenar Por:  </p>
+                    <ArrowDownIcon />
+                  </div>
                 </div>
 
                 <h1 className="text-2xl font-bold pt-4 pl-4">
@@ -200,42 +208,42 @@ useEffect(() => {
                     : "INMUEBLES "}
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8">
-              {loading ? (
+                  {loading ? (
                     <div className="flex flex-col gap-4">
-                        {Array.from({ length: 1 }).map((_, index) => (
-                            <div key={index} className="animate-pulse flex flex-col space-y-4 p-4 border ">
-                                <div className="bg-gray-300 h-72 w-[95%] "></div>
-                                <div className="bg-gray-300 h-6 w-3/4"></div>
-                                <div className="bg-gray-300 h-6 w-[95%]  "></div>
-                            </div>
-                        ))}
+                      {Array.from({ length: 1 }).map((_, index) => (
+                        <div key={index} className="animate-pulse flex flex-col space-y-4 p-4 border ">
+                          <div className="bg-gray-300 h-72 w-[95%] "></div>
+                          <div className="bg-gray-300 h-6 w-3/4"></div>
+                          <div className="bg-gray-300 h-6 w-[95%]  "></div>
+                        </div>
+                      ))}
                     </div>
-                ) : currentData.length === 0 ? (
+                  ) : currentData.length === 0 ? (
                     <div className="col-span-full flex justify-center items-center py-10">
-                        <p className="text-xl text-gray-600 font-semibold">
-                            {searchQuery === '' || cityQuery === ''
-                              ? "No hay datos disponibles"
-                              : `No se encontraron resultados para "${searchQuery.toUpperCase() || cityQuery.toUpperCase()}"`
-                            }
-                        </p>
+                      <p className="text-xl text-gray-600 font-semibold">
+                        {searchQuery === '' || cityQuery === ''
+                          ? "No hay datos disponibles"
+                          : `No se encontraron resultados para "${searchQuery.toUpperCase() || cityQuery.toUpperCase()}"`
+                        }
+                      </p>
                     </div>
-                ) : (
-                     currentData.map((propiedad: PropertyType) => (
-                        <Card
-                            key={propiedad?.id}
-                            id={propiedad?.id}
-                            multimedia={propiedad?.image[0]}
-                            price={propiedad?.sellPrice}
-                            currency={propiedad?.sellPriceCurrency}
-                            location={propiedad?.clientdata?.address}
-                            bedrooms={propiedad?.clientdata?.bedrooms}
-                            bathrooms={propiedad?.clientdata?.bathrooms}
-                            parking={propiedad?.clientdata?.parking}
-                            onClick={() => handleRouter(propiedad.id)}
-                        />
+                  ) : (
+                    currentData.map((propiedad: PropertyType) => (
+                      <Card
+                        key={propiedad?.id}
+                        id={propiedad?.id}
+                        multimedia={propiedad?.image[0]}
+                        price={propiedad?.sellPrice}
+                        currency={propiedad?.sellPriceCurrency}
+                        location={propiedad?.clientdata?.address}
+                        bedrooms={propiedad?.clientdata?.bedrooms}
+                        bathrooms={propiedad?.clientdata?.bathrooms}
+                        parking={propiedad?.clientdata?.parking}
+                        onClick={() => handleRouter(propiedad.id)}
+                      />
                     ))
-                )}
-              </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex flex-wrap w-full justify-center md:justify-end py-10 md:py-20 gap-2">
@@ -249,9 +257,8 @@ useEffect(() => {
                 <button
                   key={page + 1}
                   onClick={() => handlePageChange(page + 1)}
-                  className={`px-4 border hover:border-2 hover:border-black text-black ${
-                    currentPage === page + 1 ? 'font-bold' : ''
-                  }`}
+                  className={`px-4 border hover:border-2 hover:border-black text-black ${currentPage === page + 1 ? 'font-bold' : ''
+                    }`}
                 >
                   {page + 1}
                 </button>
@@ -269,21 +276,22 @@ useEffect(() => {
       <AnimatePresence>
         {showMobileFilter && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ x: -320 }}
               animate={{ x: 0 }}
               exit={{ x: -320 }}
               transition={{ type: "spring", bounce: 0, duration: 0.4 }}
               className="fixed top-0 left-0 h-full w-80 z-50 md:hidden text-black"
             >
-              <Filter 
-                results={filteredData.length} 
+              <Filter
+                results={filteredData.length}
                 showMobileFilter={showMobileFilter}
-                onPropertyTypeChange={setSelectedPropertyTypes}
+                filters={filters}
+                onFilterChange={(key) => (values) => setFilters({ [key]: values })}
               />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
