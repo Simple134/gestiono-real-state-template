@@ -1,10 +1,12 @@
 import { PropertyType } from "@/propertyType";
 import { Gestiono } from "@bitnation-dev/management/server";
+import { unstable_noStore as noStore } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
+    noStore();
     if (!process.env.GESTIONO_API_URL) {
       throw new Error("GESTIONO_API_URL is not defined");
     }
