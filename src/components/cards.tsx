@@ -5,7 +5,7 @@ import { HeartIcon, BathIcon, BedIcon, ParkingIcon } from "./icons";
 import Image from "next/image";
 import { Container } from "@bitnation-dev/components";
 
-const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, currency, onClick, id }:{
+const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, currency, onClick, id, squareMeters }:{
     multimedia: string;
     price: number;
     location: string;
@@ -15,6 +15,7 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
     currency: string;
     onClick?: () => void;
     id: number;
+    squareMeters: string;
 }) => {
     const [isFavorite, setIsFavorite] = useState(() => {
         if (typeof window !== 'undefined') {
@@ -42,7 +43,7 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
     }
     return (
         <Container>
-        <div className="flex flex-col mt-4 cursor-pointer w-72 ">
+        <div className="flex flex-col mt-4 cursor-pointer w-80 ">
             <div className="relative w-full">
                 {multimedia ? <Image onClick={onClick} width={600} height={600} src={multimedia} alt="" className="object-cover w-full h-full" style={{ aspectRatio: 4/3 }} /> : <div className="w-full h-full bg-gray-200"> No Image Available</div>}
                 <button className="absolute top-2 right-2" onClick={toggleFavorite}>
@@ -65,6 +66,9 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
                     <div className="flex items-center space-x-2">
                         <ParkingIcon />
                         <p className="text-sm text-gray-500">{parking ? parking + " Parking" : "- Parking"}</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <p className="text-sm text-gray-500">{squareMeters ? squareMeters + " m2" : "- m2"}</p>
                     </div>
                 </div>
                 <p className="text-sm text-[#3B4504] pt-2">{location ? location : "-"}</p>

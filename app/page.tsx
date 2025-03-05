@@ -150,7 +150,7 @@ export default function Home() {
                         ))
                     ) : (
                         data.map((propiedad) => (
-                            <div key={propiedad?.id} className="flex-shrink-0 w-72">
+                            <div key={propiedad?.id} className="flex-shrink-0 w-80">
                                 <Card
                                     id={propiedad?.id}
                                     currency={propiedad?.sellPriceCurrency}
@@ -161,6 +161,7 @@ export default function Home() {
                                     bathrooms={propiedad?.clientdata?.bathrooms}
                                     parking={propiedad?.clientdata?.parking}
                                     onClick={() => handleRouter(propiedad.id)}
+                                    squareMeters={propiedad?.clientdata?.squareMeters}
                                 />
                             </div>
                         ))

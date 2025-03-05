@@ -86,6 +86,13 @@ export const Description = ({ data }: { data: PropertyType }) => {
                 : "0 Parking"}
             </p>
           </div>
+          <div className="flex items-center space-x-2">
+            <p className="text-sm text-gray-500">
+              {data?.clientdata?.squareMeters
+                ? data?.clientdata?.squareMeters + " m2"
+                : "0 m2"}
+            </p>
+          </div>
         </div>
         <div className="flex border-t border-b border-gray-300 items-center mb-8 py-2 overflow-x-auto no-scrollbar">
           <button
@@ -284,6 +291,7 @@ export const Description = ({ data }: { data: PropertyType }) => {
                             bedrooms={propiedad.clientdata?.bedrooms}
                             bathrooms={propiedad.clientdata?.bathrooms}
                             parking={propiedad.clientdata?.parking}
+                            squareMeters={propiedad.clientdata?.squareMeters}
                           />
                         </div>
                       ))

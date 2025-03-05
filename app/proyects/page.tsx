@@ -9,13 +9,11 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filters, PropertyType } from "@/propertyType";
 
-const ITEMS_PER_PAGE = 12;
-
 export default function Proyects() {
   const pathname = usePathname()
   const pageName = <span style={{ color: '#9C9C78' }}>Inmuebles</span>
   const [data, setData] = useState<PropertyType[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchLocation, setSearchLocation] = useState('');
   const [city, setCity] = useState('');
   const [, setError] = useState<string | null>(null);
@@ -55,20 +53,29 @@ export default function Proyects() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/properties');
+        setLoading(true);
+        const response = await fetch(`/api/properties?page=${currentPage}`);
+        
         if (!response.ok) {
-          throw new Error('Error al cargar las propiedades');
+          const errorText = await response.text();
+          console.error('Error en la respuesta:', errorText);
+          throw new Error(`Error al cargar las propiedades: ${response.status} ${response.statusText}`);
         }
+        
         const result = await response.json();
+        console.log(`Propiedades recibidas para página ${currentPage}:`, result.length);
+        
         setData(result);
         setLoading(false);
       } catch (error) {
+        console.error('Error completo:', error);
         setError((error as Error).message);
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const filteredData = data.filter((propiedad) => {
 
@@ -110,19 +117,20 @@ export default function Proyects() {
     return matchesPropertyType && matchesLocation && matchesPropertyBedrooms && matchesPropertyBathrooms && matchesPropertyParking;
   });
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentData = filteredData.slice(startIndex, endIndex);
+  const paginatedData = filteredData;
+
+
 
   const handlePageChange = (newPage: number) => {
-    if (newPage > 0 && newPage <= Math.ceil(data.length / ITEMS_PER_PAGE)) {
+    if (newPage > 0) {
       setCurrentPage(newPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      console.log("Cambiando a página:", newPage);
     }
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchLocation(e.target.value);
-    setCurrentPage(1);
   };
 
   const handleRouter = (id: number) => {
@@ -140,6 +148,16 @@ export default function Proyects() {
       document.body.classList.remove('overflow-hidden');
     };
   }, [showMobileFilter]);
+
+  useEffect(() => {
+    console.log(filteredData, currentPage)
+  }, [filteredData, currentPage])
+
+  useEffect(() => {
+    console.log(`Página actual: ${currentPage}`);
+    console.log(`Total de datos filtrados: ${filteredData.length}`);
+    console.log(`Datos mostrados: ${paginatedData.length}`);
+  }, [currentPage, filteredData, paginatedData]);
 
   return (
     < >
@@ -218,7 +236,7 @@ export default function Proyects() {
                         </div>
                       ))}
                     </div>
-                  ) : currentData.length === 0 ? (
+                  ) : filteredData.length === 0 ? (
                     <div className="col-span-full flex justify-center items-center py-10">
                       <p className="text-xl text-gray-600 font-semibold">
                         {searchQuery === '' || cityQuery === ''
@@ -228,7 +246,7 @@ export default function Proyects() {
                       </p>
                     </div>
                   ) : (
-                    currentData.map((propiedad: PropertyType) => (
+                    paginatedData.map((propiedad: PropertyType) => (
                       <Card
                         key={propiedad?.id}
                         id={propiedad?.id}
@@ -239,6 +257,7 @@ export default function Proyects() {
                         bedrooms={propiedad?.clientdata?.bedrooms}
                         bathrooms={propiedad?.clientdata?.bathrooms}
                         parking={propiedad?.clientdata?.parking}
+                        squareMeters={propiedad?.clientdata?.squareMeters}
                         onClick={() => handleRouter(propiedad.id)}
                       />
                     ))
@@ -249,23 +268,22 @@ export default function Proyects() {
             <div className="flex flex-wrap w-full justify-center md:justify-end py-10 md:py-20 gap-2">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
-                className="px-4 py-2 border text-black hover:border-2 hover:border-black cursor-pointer"
+                className={`px-4 py-2 border text-black hover:border-2 hover:border-black cursor-pointer ${currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={currentPage <= 1}
               >
                 <ArrowLeftIcon />
               </button>
-              {[...Array(Math.ceil(data.length / ITEMS_PER_PAGE)).keys()].map((page) => (
                 <button
-                  key={page + 1}
-                  onClick={() => handlePageChange(page + 1)}
-                  className={`px-4 border hover:border-2 hover:border-black text-black ${currentPage === page + 1 ? 'font-bold' : ''
-                    }`}
+                  key={currentPage}
+                  onClick={() => handlePageChange(currentPage)}
+                  className={`px-4 border hover:border-2 hover:border-black text-black ${currentPage === currentPage ? 'font-bold bg-gray-200' : ''}`}
                 >
-                  {page + 1}
+                  {currentPage}
                 </button>
-              ))}
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
-                className="px-4 py-2 border text-black hover:border-2 hover:border-black cursor-pointer"
+                className={`px-4 py-2 border text-black hover:border-2 hover:border-black cursor-pointer ${currentPage >= filteredData.length ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={filteredData.length === 0}
               >
                 <ArrowRightIcon />
               </button>

@@ -33,6 +33,8 @@ export default async function PropertyPage({
         parking: properties?.clientdata?.parking,
         //@ts-expect-error-ignore
         propertyType: properties?.clientdata?.propertyType,
+        //@ts-expect-error-ignore
+        squareMeters: properties?.clientdata?.squareMeters,
       }
 
     };

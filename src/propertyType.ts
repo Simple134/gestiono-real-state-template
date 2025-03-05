@@ -12,6 +12,7 @@ export interface PropertyType{
       address: string;
       parking: string;
       propertyType: string;
+      squareMeters: string;
     };
   };
 

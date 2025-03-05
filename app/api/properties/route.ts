@@ -3,16 +3,15 @@ import { Gestiono } from "@bitnation-dev/management/server";
 import { unstable_noStore as noStore } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const GET = async (req: NextRequest, res: NextResponse) => {
+const getProperties = async (page: number) => {
   try {
     noStore();
     if (!process.env.GESTIONO_API_URL) {
       throw new Error("GESTIONO_API_URL is not defined");
     }
     const properties = await Gestiono.v2GetResources({
-      itemsPerPage: "12",
-      page: "1",
+      itemsPerPage: "10",
+      page: page.toString(),
     });
     const data: PropertyType[] = properties.items.map((property) => ({
       id: property?.id,
@@ -32,14 +31,43 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
         parking: property.clientdata?.parking,
         //@ts-expect-error-ignore
         address: property.clientdata?.address,
+        //@ts-expect-error-ignore
+        squareMeters: property.clientdata?.squareMeters,
       },
     }));
-    return NextResponse.json(data);
+    return { data, error: null };
   } catch (error) {
-    console.error("Error al obtener las casas:", error);
+    console.error("Error al obtener las propiedades:", error);
+    return { 
+      data: null, 
+      error: {
+        message: "Error al obtener las propiedades",
+        details: (error as Error).message
+      }
+    };
+  }
+};
+
+export async function GET(req: NextRequest) {
+  try {
+    const url = new URL(req.url);
+    const page = url.searchParams.get('page') || '1';
+  
+    
+    console.log(`Obteniendo propiedades para la página: ${page}`);
+    
+    const result = await getProperties(parseInt(page));
+    
+    if (result.error) {
+      return NextResponse.json(result.error, { status: 500 });
+    }
+    
+    return NextResponse.json(result.data);
+  } catch (error) {
+    console.error("Error en el método GET:", error);
     return NextResponse.json(
-      { error: "Error al obtener las casas" },
+      { error: "Error al procesar la solicitud" },
       { status: 500 }
     );
   }
-};
+}
