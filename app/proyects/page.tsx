@@ -225,7 +225,7 @@ export default function Proyects() {
                     ? `RESULTADOS PARA "${searchQuery.toUpperCase() || cityQuery.toUpperCase()}"`
                     : "INMUEBLES "}
                 </h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-8">
+                <Grid columns={{ xl: 3, md: 2, sm: 1 }}>
                   {loading ? (
                     <div className="flex flex-col gap-4">
                       {Array.from({ length: 1 }).map((_, index) => (
@@ -262,7 +262,7 @@ export default function Proyects() {
                       />
                     ))
                   )}
-                </div>
+                </Grid>
               </div>
             </div>
             <div className="flex flex-wrap w-full justify-center md:justify-end py-10 md:py-20 gap-2">
