@@ -45,7 +45,9 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
         <Container>
         <div className="flex flex-col mt-4 cursor-pointer w-80 ">
             <div className="relative w-full">
-                {multimedia ? <Image onClick={onClick} width={600} height={600} src={multimedia} alt="" className="object-cover w-full h-full" style={{ aspectRatio: 4/3 }} /> : <div className="w-full h-full bg-gray-200"> No Image Available</div>}
+                {multimedia ? 
+                <Image onClick={onClick} width={600} height={600} src={multimedia} alt="" className="object-cover w-full h-full" style={{ aspectRatio: 4/3 }} /> : 
+                <div className="w-full h-72 bg-gray-200 text-center flex items-center justify-center text-gray-500 animate-pulse"> No hay Imagen Disponible</div>}
                 <button className="absolute top-2 right-2" onClick={toggleFavorite}>
                     <HeartIcon color={isFavorite} />
                 </button>
