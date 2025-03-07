@@ -112,7 +112,7 @@ export default function Proyects() {
     const matchesLocation =
       searchLocation === '' ||
       propiedad.name.toLowerCase().includes(searchLocation.toLowerCase()) ||
-      propiedad.clientdata?.address?.toLowerCase().includes(searchLocation.toLowerCase());
+      propiedad.clientdata?.address?.toString().toLowerCase().includes(searchLocation.toLowerCase());
 
     return matchesPropertyType && matchesLocation && matchesPropertyBedrooms && matchesPropertyBathrooms && matchesPropertyParking;
   });

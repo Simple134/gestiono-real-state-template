@@ -9,7 +9,7 @@ export interface PropertyType{
     clientdata: {
       bathrooms: string;
       bedrooms: string;
-      address: string;
+      address: string
       parking: string;
       propertyType: string;
       squareMeters: string;

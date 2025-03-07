@@ -43,7 +43,7 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
     }
     return (
         <Container>
-        <div className="flex flex-col mt-4 cursor-pointer w-80 ">
+        <div className="flex flex-col mt-4 cursor-pointer w-96 ">
             <div className="relative w-full">
                 {multimedia ? 
                 <Image onClick={onClick} width={600} height={600} src={multimedia} alt="" className="object-cover w-full h-full" style={{ aspectRatio: 4/3 }} /> : 
@@ -73,7 +73,7 @@ const Card = ({  multimedia, price, location, bedrooms, bathrooms, parking, curr
                         <p className="text-sm text-gray-500">{squareMeters ? squareMeters + " m2" : "- m2"}</p>
                     </div>
                 </div>
-                <p className="text-sm text-[#3B4504] pt-2">{location ? location : "-"}</p>
+                <p className="text-sm text-[#3B4504] pt-2 w-72 truncate">{location ? location : "-"}</p>
             </div>
         </div>
         </Container>
